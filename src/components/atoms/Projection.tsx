@@ -42,14 +42,6 @@ export const Projection: React.FC<ProjectionProps> = ({}) => {
   );
 };
 
-function displayAnnotation(geo: any) {
-  <ProvinceMarkers
-    name={geo.properties.gn_name}
-    population={100}
-    cases={46}
-  ></ProvinceMarkers>;
-}
-
 const StyledProjectionContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -86,5 +78,9 @@ const StyledProvince = styled(Geography)`
  *
  */
 function displayAnnotation(geo: any) {
-  console.log(geo.properties.gn_name);
+  <ProvinceMarkers
+    name={geo.properties.gn_name}
+    population={100}
+    cases={46}
+  ></ProvinceMarkers>;
 }
