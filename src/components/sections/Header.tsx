@@ -13,6 +13,7 @@ export const Header: React.FC<HeaderProps> = ({}) => {
         <StyledText>Covid Mapper</StyledText>
         <StyledMenuWrapper>
           <MenuItem type="github" />
+          <MenuItem type="docs" />
           <ColorToggle />
         </StyledMenuWrapper>
       </StyledInnerContainer>

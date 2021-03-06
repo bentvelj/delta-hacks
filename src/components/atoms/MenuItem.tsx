@@ -4,13 +4,25 @@ import styled from 'styled-components';
 import theme from '../../theme';
 
 interface MenuItemProps {
-  type: string;
+  type: 'github' | 'docs';
 }
 
-export const MenuItem: React.FC<MenuItemProps> = ({}) => {
+export const MenuItem: React.FC<MenuItemProps> = ({ type }) => {
+  let url: string;
+
+  switch (type) {
+    case 'github':
+      url = 'https://github.com/dimitritsampiras/delta-hacks';
+      break;
+    default:
+      url = '/';
+  }
+
   return (
     <StyledLinkContainer>
-      <StyledMenuItem href="github.com">Github</StyledMenuItem>
+      <StyledMenuItem href={url} target="_blank">
+        {type}
+      </StyledMenuItem>
     </StyledLinkContainer>
   );
 };
@@ -19,4 +31,5 @@ const StyledLinkContainer = styled.div``;
 
 const StyledMenuItem = styled(Link)`
   color: ${theme.colors.teal[100]};
+  text-transform: capitalize;
 `;
