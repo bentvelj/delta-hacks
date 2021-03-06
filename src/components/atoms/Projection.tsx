@@ -13,7 +13,7 @@ interface ProjectionProps {}
 export const Projection: React.FC<ProjectionProps> = ({}) => {
   return (
     <StyledProjectionContainer className="projection">
-      <ComposableMap projection="geoAlbers" projectionConfig={{ scale: 600 }}>
+      <ComposableMap projection="geoAlbers" className="composible">
         <Geographies geography={geoUrl}>
           {({ geographies }) =>
             geographies.map((geo) => {
@@ -44,8 +44,6 @@ const StyledProjectionContainer = styled.div`
 `;
 
 const StyledProvince = styled(Geography)`
-  display: flex;
-  justify-content: center;
   :hover {
     cursor: pointer;
     fill: ${theme.colors.gray[700]};
