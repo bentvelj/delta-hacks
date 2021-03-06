@@ -15,3 +15,6 @@ def β(t): # Infectivity
 def γ(t): # Recovery time
     # γ is the rate of recovery, so that 1/γ is the average time period during which an infected individual remains infectious
     pass
+
+
+#The product βS(t) I(t) is the total infection rate, the fraction of the population that will be infected per unit time at time t.
