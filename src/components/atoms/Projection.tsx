@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 import styled from 'styled-components';
 import theme from '../../theme';
+import { ProvinceMarkers } from './ProvinceMarkers';
 
 // url to a valid topojson file
 const geoUrl =
@@ -30,7 +31,7 @@ export const Projection: React.FC<ProjectionProps> = ({}) => {
                   strokeWidth="0.5px"
                   fill={theme.colors.gray[800]}
                   preserveAspectRatio="xMidYMid meet"
-                  onClick={() => displayAnnotation(geo)}
+                  onMouseEnter={() => updateAnnotation(geo)}
                 />
               );
             })
@@ -75,6 +76,10 @@ const StyledProvince = styled(Geography)`
 /**
  *
  */
-function displayAnnotation(geo: any) {
-  console.log(geo.properties.gn_name);
+function updateAnnotation(geo: any) {
+  <ProvinceMarkers
+    name={geo.properties.gn_name}
+    population={100}
+    cases={46}
+  ></ProvinceMarkers>;
 }
