@@ -19,7 +19,7 @@ export const Projection: React.FC<ProjectionProps> = ({}) => {
       >
         <Geographies geography={geoUrl}>
           {({ geographies }) =>
-            geographies.map((geo) => {
+            geographies.map((geo) => {        
               return (
                 <StyledProvince
                   key={geo.rsmKey}
@@ -38,16 +38,6 @@ export const Projection: React.FC<ProjectionProps> = ({}) => {
 };
 
 const StyledProjectionContainer = styled.div``;
-
-// const StyledComposableMap = styled(ComposableMap)`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// `;
-
-// const StyledGeographies = styled(Geographies)`
-//   display: block;
-// `;
 
 const StyledProvince = styled(Geography)`
   :hover {
