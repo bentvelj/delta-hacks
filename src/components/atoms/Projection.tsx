@@ -17,6 +17,7 @@ export const Projection: React.FC<ProjectionProps> = ({}) => {
         <Geographies geography={geoUrl}>
           {({ geographies }) =>
             geographies.map((geo) => {
+              // console.log(geo);
               return (
                 <StyledProvince
                   key={geo.rsmKey}
@@ -36,7 +37,9 @@ export const Projection: React.FC<ProjectionProps> = ({}) => {
   );
 };
 
-const displayAnnotation = (geoInfo) => {};
+function displayAnnotation(geo: any) {
+  console.log(geo.properties.gn_name);
+}
 
 const StyledProjectionContainer = styled.div`
   display: flex;
