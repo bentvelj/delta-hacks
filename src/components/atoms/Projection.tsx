@@ -16,14 +16,10 @@ export const Projection: React.FC<ProjectionProps> = ({}) => {
       <StyledComposableMap
         projection="geoAlbers"
         className="svg-composible"
-        viewBox="0 0 500 500"
-        // width={100}
-        // height={100}
+        // viewBox="0 0 500 500"
+        projectionConfig={{ scale: 600, center: [-0.6, 58.7] }}
       >
-        <StyledGeographies
-          geography={geoUrl}
-          className="g-geographies"
-        >
+        <StyledGeographies geography={geoUrl} className="g-geographies">
           {({ geographies }) =>
             geographies.map((geo) => {
               return (
@@ -48,22 +44,19 @@ export const Projection: React.FC<ProjectionProps> = ({}) => {
 const StyledProjectionContainer = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   height: 600px;
   width: 100%;
+  max-width: 1200px;
+  min-width: 1000px;
+  margin: auto
 `;
 
 const StyledComposableMap = styled(ComposableMap)`
-  height: 100%;
-  position: relative;
+  display: block;
 `;
 
-const StyledGeographies = styled(Geographies)`
-  max-width: 100%;
-  max-height: 100%;
-  display: block;
-  position: absolute;
-  top: 50%
-`;
+const StyledGeographies = styled(Geographies)``;
 
 const StyledProvince = styled(Geography)`
   :hover {
