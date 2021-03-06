@@ -45,12 +45,10 @@ export const Projection: React.FC<ProjectionProps> = ({onHover}) => {
 };
 
 const StyledProjectionContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 600px;
-  width: 950px;
+  width: 900px;
   margin: 0;
+  margin-right: -40px;
 `;
 
 const StyledComposableMap = styled(ComposableMap)`

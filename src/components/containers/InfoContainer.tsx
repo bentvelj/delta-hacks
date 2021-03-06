@@ -11,7 +11,6 @@ interface InfoContainerProps {
 export const InfoContainer: React.FC<InfoContainerProps> = ({province}) => {
   const { colorMode } = useColorMode();
   return <StyledContainer colorMode={colorMode}>
-    Province: {province}
     <ProvinceMarkers name={province} population={100} cases={30}/>
   </StyledContainer>;
 };
