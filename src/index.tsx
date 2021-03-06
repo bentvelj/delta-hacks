@@ -11,8 +11,8 @@ ReactDOM.render(
     <ColorModeScript initialColorMode={theme.config.initialColorMode} />
     <ChakraProvider theme={theme}>
       <Header />
-      <SliderPanel />
       <Projection />
+      <SliderPanel />
     </ChakraProvider>
   </React.StrictMode>,
   document.getElementById('root')

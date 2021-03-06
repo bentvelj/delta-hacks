@@ -48,7 +48,6 @@ const StyledProjectionContainer = styled.div`
   height: 600px;
   width: 100%;
   max-width: 1200px;
-  min-width: 1000px;
   margin: auto
 `;
 
