@@ -1,53 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { geoEqualEarth, geoPath } from 'd3-geo';
-import { feature } from 'topojson-client';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
+import styled from 'styled-components';
+
+// url to a valid topojson file
+const geoUrl =
+  'https://gist.githubusercontent.com/Brideau/2391df60938462571ca9/raw/f5a1f3b47ff671eaf2fb7e7b798bacfc6962606a/canadaprov.json';
+
+
 
 interface ProjectionProps {}
 
-const projection = geoEqualEarth()
-  .scale(160)
-  .translate([800 / 2, 450 / 2]);
-
 export const Projection: React.FC<ProjectionProps> = ({}) => {
-  const [geographies, setGeographies] = useState([]);
-
-  useEffect(() => {
-    fetch('/world-110m.json').then((response) => {
-      if (response.status !== 200) {
-        console.log(`There was a problem: ${response.status}`);
-        return;
-      }
-      response.json().then((worlddata) => {
-        setGeographies(
-          feature(worlddata, worlddata.objects.countries).features
-        );
-      });
-    });
-  }, []);
-
   return (
-    <svg width={800} height={450} viewBox="0 0 800 450">
-      <g className="countries">
-        {geographies.map((d, i) => (
-          <path
-            key={`path-${i}`}
-            d={geoPath().projection(projection)(d)}
-            className="country"
-            fill={`rgba(38,50,56,${(1 / geographies.length) * i})`}
-            stroke="#FFFFFF"
-            strokeWidth={0.5}
-          />
-        ))}
-      </g>
-      <g className="markers">
-        <circle
-          cx={this.projection()([8, 48])[0]}
-          cy={this.projection()([8, 48])[1]}
-          r={10}
-          fill="#E91E63"
-          className="marker"
-        />
-      </g>
-    </svg>
+    <StyledProjectionContainer className="projection">
+      <ComposableMap projection="geoAlbers" projectionConfig={{scale: 400, center: [-0.6, 38.7] }}>
+        <Geographies geography={geoUrl}>
+          {({ geographies }) =>
+            geographies.map((geo) => (
+              <Geography key={geo.rsmKey} geography={geo} />
+            ))
+          }
+        </Geographies>
+      </ComposableMap>
+    </StyledProjectionContainer>
   );
 };
+
+
+const StyledProjectionContainer = styled.div`
+  /* height: 1000px;
+  display: flex;
+  align-items: center; */
+`;
+
