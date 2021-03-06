@@ -1,5 +1,5 @@
+import { theme } from '@chakra-ui/react';
 import React from 'react';
-import { Box, Text } from '@chakra-ui/react';
 import styled from 'styled-components';
 
 interface HeaderProps {}
@@ -8,7 +8,9 @@ export const Header: React.FC<HeaderProps> = ({}) => {
   return (
     <StyledContainer className="container">
       <StyledInnerContainer>
-        <Text fontSize="6xl" colorScheme="blue" >Delta Hacks!</Text>
+        <StyledText theme={theme}>
+          Delta Hacks!
+        </StyledText>
       </StyledInnerContainer>
     </StyledContainer>
   );
@@ -22,10 +24,16 @@ const FlexContainer = styled.div`
 
 const StyledContainer = styled(FlexContainer)`
   width: 100%;
-  height: 200px;
+  height: 150px;
 `;
 
 const StyledInnerContainer = styled(FlexContainer)`
   height: 75%;
   width: 75%;
+`;
+
+const StyledText = styled.h1`
+  font-weight: bold;
+  color: ${theme.colors.teal[200]};
+  font-size: ${theme.fontSizes['6xl']}
 `;
