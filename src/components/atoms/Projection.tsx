@@ -12,9 +12,18 @@ interface ProjectionProps {}
 
 export const Projection: React.FC<ProjectionProps> = ({}) => {
   return (
-    <StyledProjectionContainer className="projection">
-      <ComposableMap projection="geoAlbers" className="composible">
-        <Geographies geography={geoUrl}>
+    <StyledProjectionContainer className="div-projection">
+      <StyledComposableMap
+        projection="geoAlbers"
+        className="svg-composible"
+        viewBox="0 0 500 500"
+        // width={100}
+        // height={100}
+      >
+        <StyledGeographies
+          geography={geoUrl}
+          className="g-geographies"
+        >
           {({ geographies }) =>
             geographies.map((geo) => {
               return (
@@ -30,19 +39,30 @@ export const Projection: React.FC<ProjectionProps> = ({}) => {
               );
             })
           }
-        </Geographies>
-      </ComposableMap>
+        </StyledGeographies>
+      </StyledComposableMap>
     </StyledProjectionContainer>
   );
 };
 
-function displayAnnotation(geo: any) {
-  console.log(geo.properties.gn_name);
-}
-
 const StyledProjectionContainer = styled.div`
   display: flex;
   justify-content: center;
+  height: 600px;
+  width: 100%;
+`;
+
+const StyledComposableMap = styled(ComposableMap)`
+  height: 100%;
+  position: relative;
+`;
+
+const StyledGeographies = styled(Geographies)`
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  position: absolute;
+  top: 50%
 `;
 
 const StyledProvince = styled(Geography)`
@@ -60,3 +80,10 @@ const StyledProvince = styled(Geography)`
     fill: ${theme.colors.teal[600]};
   }
 `;
+
+/**
+ *
+ */
+function displayAnnotation(geo: any) {
+  console.log(geo.properties.gn_name);
+}
