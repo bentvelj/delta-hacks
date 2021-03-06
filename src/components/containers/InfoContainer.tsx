@@ -2,12 +2,18 @@ import { ColorMode, useColorMode } from '@chakra-ui/react';
 import React from 'react';
 import styled from 'styled-components';
 import theme from '../../theme';
+import { ProvinceMarkers } from '../atoms/ProvinceMarkers';
 
-interface InfoContainerProps {}
+interface InfoContainerProps {
+  province: string;
+}
 
-export const InfoContainer: React.FC<InfoContainerProps> = ({}) => {
+export const InfoContainer: React.FC<InfoContainerProps> = ({province}) => {
   const { colorMode } = useColorMode();
-  return <StyledContainer colorMode={colorMode}></StyledContainer>;
+  return <StyledContainer colorMode={colorMode}>
+    Province: {province}
+    <ProvinceMarkers name={province} population={100} cases={30}/>
+  </StyledContainer>;
 };
 
 const StyledContainer = styled.div<{ colorMode: ColorMode }>`

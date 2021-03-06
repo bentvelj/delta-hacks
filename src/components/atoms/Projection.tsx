@@ -9,9 +9,11 @@ import { ProvinceMarkers } from './ProvinceMarkers';
 const geoUrl =
   'https://gist.githubusercontent.com/Brideau/2391df60938462571ca9/raw/f5a1f3b47ff671eaf2fb7e7b798bacfc6962606a/canadaprov.json';
 
-interface ProjectionProps {}
+interface ProjectionProps {
+  onHover: (geo: any) => void;
+}
 
-export const Projection: React.FC<ProjectionProps> = ({}) => {
+export const Projection: React.FC<ProjectionProps> = ({onHover}) => {
   return (
     <StyledProjectionContainer className="div-projection">
       <StyledComposableMap
@@ -31,7 +33,7 @@ export const Projection: React.FC<ProjectionProps> = ({}) => {
                   strokeWidth="0.5px"
                   fill={theme.colors.gray[800]}
                   preserveAspectRatio="xMidYMid meet"
-                  onMouseEnter={() => updateAnnotation(geo)}
+                  onMouseEnter={() => onHover(geo)}
                 />
               );
             })
