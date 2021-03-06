@@ -1,5 +1,7 @@
-import { extendTheme } from '@chakra-ui/react';
+import { extendTheme } from "@chakra-ui/react"
 const theme = extendTheme({
-  components: {},
-});
-export default theme;
+  components: {
+
+  },
+})
+export default theme
