@@ -1,4 +1,4 @@
-import { theme, Switch } from '@chakra-ui/react';
+import { theme, Switch, useColorMode } from '@chakra-ui/react';
 import React from 'react';
 import styled from 'styled-components';
 
