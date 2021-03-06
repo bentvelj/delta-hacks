@@ -17,7 +17,7 @@ export const Projection: React.FC<ProjectionProps> = ({}) => {
         projection="geoAlbers"
         className="svg-composible"
         // viewBox="0 0 500 500"
-        projectionConfig={{ scale: 600, center: [-0.6, 58.7] }}
+        projectionConfig={{ scale: 700, center: [-0.6, 58.7] }}
       >
         <StyledGeographies geography={geoUrl} className="g-geographies">
           {({ geographies }) =>
@@ -46,9 +46,8 @@ const StyledProjectionContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 600px;
-  width: 100%;
-  max-width: 1200px;
-  margin: auto
+  width: 950px;
+  margin: 0;
 `;
 
 const StyledComposableMap = styled(ComposableMap)`
