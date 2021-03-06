@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { ColorMode, theme, useColorMode } from '@chakra-ui/react';
+import { ColorMode, theme, useColorMode,  Slider, SliderTrack, SliderFilledTrack, SliderThumb, } from '@chakra-ui/react';
 
 interface SliderPanelProps {}
 
 export const SliderPanel: React.FC<SliderPanelProps> = ({}) => {
   const { colorMode } = useColorMode();
+  const [ date, changeDate ] = useState();
 
   return (
     <StyledContainer>
       <StyledInnerContainer colorMode={colorMode}>
-        <label>Slider</label>
+        <Slider aria-label="slider-ex-2" colorScheme="pink" defaultValue={30} onChangeEnd={(val) => console.log(val)}>
+          <SliderTrack>
+            <SliderFilledTrack/>
+          </SliderTrack>
+
+          <SliderThumb/>
+        </Slider>
       </StyledInnerContainer>
     </StyledContainer>
   );
