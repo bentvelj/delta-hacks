@@ -28,7 +28,8 @@ const StyledInnerContainer = styled.div<{ colorMode: ColorMode }>`
   display: flex;
   width: 75%;
   height: 100%;
-  background-color: ${({colorMode}) => colorMode === 'light' ? theme.colors.gray[100] : theme.colors.gray[700]};
+  background-color: ${({ colorMode }) =>
+    colorMode === 'light' ? theme.colors.gray[100] : theme.colors.gray[700]};
   border-radius: 10px;
   padding: 40px;
 `;

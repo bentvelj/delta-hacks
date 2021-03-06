@@ -44,6 +44,6 @@ const StyledLogoWrapper = styled.div`
 
 const StyledText = styled.h1`
   font-weight: bold;
-  color: ${theme.colors.teal[200]};
+  color: ${theme.colors.gray[50]};
   font-size: ${theme.fontSizes['5xl']};
 `;
