@@ -1,16 +1,22 @@
-import { theme } from '@chakra-ui/react';
+import { theme, Switch } from '@chakra-ui/react';
 import React from 'react';
 import styled from 'styled-components';
 
 interface HeaderProps {}
 
 export const Header: React.FC<HeaderProps> = ({}) => {
+  const { colorMode, toggleColorMode } = useColorMode()
+
   return (
     <StyledContainer className="container">
       <StyledInnerContainer>
         <StyledText theme={theme}>
           Delta Hacks!
         </StyledText>
+
+        <Switch id="lightdark" size="lg">
+
+        </Switch>
       </StyledInnerContainer>
     </StyledContainer>
   );
