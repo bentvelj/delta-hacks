@@ -13,7 +13,10 @@ interface ProjectionProps {}
 export const Projection: React.FC<ProjectionProps> = ({}) => {
   return (
     <StyledProjectionContainer className="projection">
-      <ComposableMap projection="geoAlbers" projectionConfig={{ scale: 600 }}>
+      <ComposableMap
+        projection="geoAlbers"
+        className="composible"
+      >
         <Geographies geography={geoUrl}>
           {({ geographies }) =>
             geographies.map((geo) => {
@@ -24,7 +27,6 @@ export const Projection: React.FC<ProjectionProps> = ({}) => {
                   stroke={theme.colors.gray[300]}
                   strokeWidth="0.5px"
                   fill={theme.colors.gray[800]}
-                  preserveAspectRatio="xMidYMid meet"
                 />
               );
             })
@@ -35,14 +37,19 @@ export const Projection: React.FC<ProjectionProps> = ({}) => {
   );
 };
 
-const StyledProjectionContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
+const StyledProjectionContainer = styled.div``;
+
+// const StyledComposableMap = styled(ComposableMap)`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// `;
+
+// const StyledGeographies = styled(Geographies)`
+//   display: block;
+// `;
 
 const StyledProvince = styled(Geography)`
-  display: flex;
-  justify-content: center;
   :hover {
     cursor: pointer;
     fill: ${theme.colors.gray[700]};
