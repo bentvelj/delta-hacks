@@ -1,10 +1,14 @@
+import { ChakraProvider } from '@chakra-ui/react';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Person } from './components/example';
+import { Header } from './components/sections/Header';
+import theme from './theme';
 
 ReactDOM.render(
   <React.StrictMode>
-    hello
+    <ChakraProvider theme={theme}>
+      <Header/>
+    </ChakraProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
