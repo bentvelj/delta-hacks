@@ -1,38 +1,34 @@
 import React from 'react';
 import styled from 'styled-components';
-import { theme } from '@chakra-ui/react';
+import { ColorMode, theme, useColorMode } from '@chakra-ui/react';
 
-interface SliderPanelProps {
+interface SliderPanelProps {}
 
-}
+export const SliderPanel: React.FC<SliderPanelProps> = ({}) => {
+  const { colorMode } = useColorMode();
 
-export const SliderPanel: React.FC<SliderPanelProps> = ({ }) => {
   return (
     <StyledContainer>
-      <StyledInnerContainer theme={theme}>
+      <StyledInnerContainer colorMode={colorMode}>
         <label>Slider</label>
       </StyledInnerContainer>
     </StyledContainer>
   );
-}
+};
 
-const FlexContainer = styled.div`
-
+const StyledContainer = styled.div`
   display: flex;
-  
-`;
-
-const StyledContainer = styled(FlexContainer)`
   width: 100%;
   height: 100px;
   justify-content: center;
   align-items: center;
 `;
 
-const StyledInnerContainer = styled(FlexContainer)`
+const StyledInnerContainer = styled.div<{ colorMode: ColorMode }>`
+  display: flex;
   width: 75%;
   height: 100%;
-  background-color: ${theme.colors.gray[100]};
+  background-color: ${({colorMode}) => colorMode === 'light' ? theme.colors.gray[100] : theme.colors.gray[700]};
   border-radius: 10px;
   padding: 40px;
 `;
