@@ -31,7 +31,7 @@ export const Projection: React.FC<ProjectionProps> = ({}) => {
                   strokeWidth="0.5px"
                   fill={theme.colors.gray[800]}
                   preserveAspectRatio="xMidYMid meet"
-                  onMouseEnter={() => displayAnnotation(geo)}
+                  onMouseEnter={() => updateAnnotation(geo)}
                 />
               );
             })
@@ -77,7 +77,7 @@ const StyledProvince = styled(Geography)`
 /**
  *
  */
-function displayAnnotation(geo: any) {
+function updateAnnotation(geo: any) {
   <ProvinceMarkers
     name={geo.properties.gn_name}
     population={100}

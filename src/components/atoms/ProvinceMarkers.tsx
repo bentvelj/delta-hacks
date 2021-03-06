@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 
 interface ProvinceMarkersProps {
   name: string;
@@ -12,10 +13,19 @@ export const ProvinceMarkers: React.FC<ProvinceMarkersProps> = ({
   cases,
 }) => {
   return (
-    <div>
-      <label>{name}</label>
-      <label>{population}</label>
+    <StyledProviceDisplay>
+      <h3>{name}</h3>
+      <label>Population: {population}</label>
       <label>{cases}</label>
-    </div>
+    </StyledProviceDisplay>
   );
 };
+
+const StyledProviceDisplay = styled.div`
+  justify-content: center;
+  align-items: center;
+  width: 75%;
+  height: 40%;
+  margin: 10px;
+  border-radius: 5px;
+`;
