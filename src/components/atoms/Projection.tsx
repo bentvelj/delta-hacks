@@ -25,6 +25,7 @@ export const Projection: React.FC<ProjectionProps> = ({}) => {
                   strokeWidth="0.5px"
                   fill={theme.colors.gray[800]}
                   preserveAspectRatio="xMidYMid meet"
+                  onClick={() => displayAnnotation(geo)}
                 />
               );
             })
@@ -34,6 +35,8 @@ export const Projection: React.FC<ProjectionProps> = ({}) => {
     </StyledProjectionContainer>
   );
 };
+
+const displayAnnotation = (geoInfo) => {};
 
 const StyledProjectionContainer = styled.div`
   display: flex;
