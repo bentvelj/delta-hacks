@@ -8,15 +8,7 @@ interface MenuItemProps {
 }
 
 export const MenuItem: React.FC<MenuItemProps> = ({ type }) => {
-  let url: string;
-
-  switch (type) {
-    case 'github':
-      url = 'https://github.com/dimitritsampiras/delta-hacks';
-      break;
-    default:
-      url = '/';
-  }
+  let url = urlSwticher(type);
 
   return (
     <StyledLinkContainer>
@@ -33,3 +25,15 @@ const StyledMenuItem = styled(Link)`
   color: ${theme.colors.teal[100]};
   text-transform: capitalize;
 `;
+
+/**
+ *
+ */
+const urlSwticher = (type: 'github' | 'docs') => {
+  switch (type) {
+    case 'github':
+      return 'https://github.com/dimitritsampiras/delta-hacks';
+    default:
+      return 'https://github.com/dimitritsampiras/delta-hacks';
+  }
+};

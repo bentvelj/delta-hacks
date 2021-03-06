@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import theme from '../../theme';
 import { ColorToggle } from '../atoms/ColorToggle';
 import { MenuItem } from '../atoms/MenuItem';
+import { Menu } from '../containers/Menu';
 
 interface HeaderProps {}
 
@@ -10,12 +11,10 @@ export const Header: React.FC<HeaderProps> = ({}) => {
   return (
     <StyledContainer className="container">
       <StyledInnerContainer>
-        <StyledText>Covid Mapper</StyledText>
-        <StyledMenuWrapper>
-          <MenuItem type="github" />
-          <MenuItem type="docs" />
-          <ColorToggle />
-        </StyledMenuWrapper>
+        <StyledLogoWrapper>
+          <StyledText>Covid Mapper</StyledText>
+        </StyledLogoWrapper>
+        <Menu />
       </StyledInnerContainer>
     </StyledContainer>
   );
@@ -29,20 +28,18 @@ const FlexContainer = styled.div`
 
 const StyledContainer = styled(FlexContainer)`
   width: 100%;
-  height: 150px;
+  min-height: 200px;
 `;
 
 const StyledInnerContainer = styled(FlexContainer)`
   height: 75%;
-  width: 75%;
+  width: 80%;
   flex-wrap: wrap;
   justify-content: space-between;
 `;
 
-const StyledMenuWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 150px;
+const StyledLogoWrapper = styled.div`
+  width: 400px;
 `;
 
 const StyledText = styled.h1`
