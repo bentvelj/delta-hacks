@@ -14,8 +14,8 @@ export const Header: React.FC<HeaderProps> = ({}) => {
           Delta Hacks!
         </StyledText>
 
-        <Switch id="lightdark" size="lg">
-
+        <Switch id="lightdark" size="lg" onChange={toggleColorMode}>
+          Toggle {colorMode === "light" ? "Dark" : "Light"}
         </Switch>
       </StyledInnerContainer>
     </StyledContainer>
