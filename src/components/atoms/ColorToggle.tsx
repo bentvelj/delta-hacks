@@ -8,33 +8,25 @@ interface ColorToggleProps {}
 export const ColorToggle: React.FC<ColorToggleProps> = ({}) => {
   const { colorMode, toggleColorMode } = useColorMode();
 
-  if(colorMode === "light") {
-    return (
-      <FlexContainer>
-        <StyledWrapper><SunIcon/></StyledWrapper>
-        <StyledWrapper><StyledSwitch id="lightdark" size="lg" onChange={toggleColorMode}/></StyledWrapper>
-      </FlexContainer>
-    );
-  }
-
   return (
-    <FlexContainer>
-        <StyledWrapper><MoonIcon/></StyledWrapper>
-        <StyledWrapper><StyledSwitch id="lightdark" size="lg" onChange={toggleColorMode}/></StyledWrapper>
-      </FlexContainer>
+    <FlexContainer className="color-toggle-container">
+      <StyledWrapper>
+        {colorMode === 'light' ? <SunIcon /> : <MoonIcon />}
+      </StyledWrapper>
+      <StyledWrapper>
+        <StyledSwitch id="lightdark" size="lg" onChange={toggleColorMode} />
+      </StyledWrapper>
+    </FlexContainer>
   );
 };
 
 const FlexContainer = styled.div`
   display: flex;
   justify-content: center;
-  align-item: center;
 `;
 
-const StyledWrapper = styled.div`
-
-`;
+const StyledWrapper = styled.div``;
 
 const StyledSwitch = styled(Switch)`
-  margin-left: 7px;
+  margin-left: 10px;
 `;

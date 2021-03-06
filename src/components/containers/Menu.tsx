@@ -20,9 +20,13 @@ const StyledMenuContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  width: 200px;
+  width: 250px;
+
+  @media (max-width: 760px) {
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+  }
 `;
 
-const StyledToggleWrapper = styled.div`
-  margin-left: 10px;
-`;
+const StyledToggleWrapper = styled.div``;

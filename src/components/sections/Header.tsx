@@ -36,10 +36,16 @@ const StyledInnerContainer = styled(FlexContainer)`
   width: 80%;
   flex-wrap: wrap;
   justify-content: space-between;
+
+  @media (max-width: 760px) {
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+  }
 `;
 
 const StyledLogoWrapper = styled.div`
-  width: 400px;
+  /* width: 400px; */
 `;
 
 const StyledText = styled.h1`
