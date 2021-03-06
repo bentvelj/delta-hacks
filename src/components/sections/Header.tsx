@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import theme from '../../theme';
 import { ColorToggle } from '../atoms/ColorToggle';
+import { Logo } from '../atoms/Logo';
 import { MenuItem } from '../atoms/MenuItem';
 import { Menu } from '../containers/Menu';
 
@@ -11,9 +12,7 @@ export const Header: React.FC<HeaderProps> = ({}) => {
   return (
     <StyledContainer className="container">
       <StyledInnerContainer>
-        <StyledLogoWrapper>
-          <StyledText>Covid Mapper</StyledText>
-        </StyledLogoWrapper>
+        <Logo />
         <Menu />
       </StyledInnerContainer>
     </StyledContainer>
@@ -42,14 +41,4 @@ const StyledInnerContainer = styled(FlexContainer)`
     align-items: flex-start;
     flex-direction: column;
   }
-`;
-
-const StyledLogoWrapper = styled.div`
-  /* width: 400px; */
-`;
-
-const StyledText = styled.h1`
-  font-weight: bold;
-  color: ${theme.colors.gray[50]};
-  font-size: ${theme.fontSizes['5xl']};
 `;

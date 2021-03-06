@@ -8,9 +8,7 @@ export const Menu: React.FC = ({}) => {
     <StyledMenuContainer>
       <MenuItem type="github" />
       <MenuItem type="docs" />
-      <StyledToggleWrapper>
-        <ColorToggle />
-      </StyledToggleWrapper>
+      <ColorToggle />
     </StyledMenuContainer>
   );
 };
@@ -28,5 +26,3 @@ const StyledMenuContainer = styled.div`
     flex-direction: column;
   }
 `;
-
-const StyledToggleWrapper = styled.div``;
