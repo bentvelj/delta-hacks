@@ -53,6 +53,7 @@ const StyledOuterBox = styled.div`
   display: flex;
   width: 110px;
   min-height: 100px;
+  height: 180px;
   justify-content: center;
   align-items; center;
   border-width: 2px;

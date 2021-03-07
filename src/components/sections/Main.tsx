@@ -53,9 +53,9 @@ export const Main: React.FC<MainProps> = () => {
     35874,
     1369000,
   ];
-  let population;
+  var population: number;
 
-  console.log(province);
+  // console.log(province);
 
   switch (province) {
     case 'Alberta': {
@@ -116,8 +116,8 @@ export const Main: React.FC<MainProps> = () => {
     }
   }
 
-  const handleClick = (event: ButtonEvent, geo: any) => {
-    setProvince(geo.properties.gn_name);
+  const handleClick = async (event: ButtonEvent, geo: any) => {
+    await setProvince(geo.properties.gn_name);
     onSlide(date);
   };
 
@@ -128,7 +128,7 @@ export const Main: React.FC<MainProps> = () => {
   // API STUFF ============================================================
 
   const onSlide = async (date: string) => {
-    setDate(date);
+    await setDate(date);
     let provinceAbbreviation = generateAbbrev(province); // generate abbreviations
 
     let dateArray = date.split('-');
@@ -139,6 +139,7 @@ export const Main: React.FC<MainProps> = () => {
     );
 
     if (selectedDateObject.getTime() < Date.now() - 1000 * 60 * 60 * 24) {
+      // console.log(date);
       const response = await fetch(
         `https://api.opencovid.ca/timeseries?loc=${provinceAbbreviation}&date=${date}`
       );
@@ -212,19 +213,104 @@ export const Main: React.FC<MainProps> = () => {
       const dataCountry = await responseCountry.json();
       console.log(dataCountry);
       changeNumbersList(getProvinceValues(dataCountry.active));
+    } else {
+      let dateNow: Date = new Date();
+      let dateNowString = `${dateNow.getDate() - 1}-${
+        dateNow.getMonth() + 1
+      }-${dateNow.getFullYear()}`;
+      const response = await fetch(
+        `https://api.opencovid.ca/timeseries?loc=${provinceAbbreviation}&date=${dateNowString}`
+      );
+      const data = await response.json();
+
+      let daysTil = Math.ceil(
+        (selectedDateObject.getTime() - dateNow.getTime()) /
+          (1000 * 60 * 60 * 24)
+      );
+      const dataFetch = await fetch(
+        `https://deltahacks-2021.herokuapp.com/simulate?pop=${population}&i0=${data.active[0].active_cases}&b=1.1&d_r=0.1&vax_offset=${daysTil}&days=${daysTil}`
+      );
+      const pythonAPIData = await dataFetch.json();
+
+      let activeCases,
+        dailyCases,
+        dailyTested,
+        dailyDeaths,
+        culminativeCases,
+        culminativeTested,
+        culminativeDeaths,
+        culminativeRecovered;
+
+      try {
+        activeCases =
+          pythonAPIData.dataVectors[1].data[
+            pythonAPIData.dataVectors[1].data.length - 1
+          ];
+      } catch (error) {
+        activeCases = 0;
+      }
+      try {
+        dailyCases = data.cases[0].cases;
+      } catch (error) {
+        dailyCases = 0;
+      }
+      try {
+        dailyTested = data.testing[0].testing;
+      } catch (error) {
+        dailyTested = 0;
+      }
+      try {
+        dailyDeaths = data.mortality[0].deaths;
+      } catch (error) {
+        dailyDeaths = 0;
+      }
+      try {
+        culminativeCases = data.active[0].cumulative_cases;
+      } catch (error) {
+        culminativeCases = 0;
+      }
+      try {
+        culminativeTested = data.testing[0].cumulative_testing;
+      } catch (error) {
+        culminativeTested = 0;
+      }
+      try {
+        culminativeDeaths = data.active[0].cumulative_deaths;
+      } catch (error) {
+        culminativeDeaths = 0;
+      }
+      try {
+        culminativeRecovered = data.active[0].cumulative_recovered;
+      } catch (error) {
+        culminativeRecovered = 0;
+      }
+
+      setCovidData({
+        activeCases: activeCases,
+        dailyCases: dailyCases,
+        culminativeCases: culminativeCases,
+        dailyDeaths: dailyDeaths,
+        culminativeDeaths: culminativeDeaths,
+        dailyTested: dailyTested,
+        culminativeTested: culminativeTested,
+        culminativeRecovered: culminativeRecovered,
+      });
     }
   };
 
   return (
     <>
       <StyledContainer>
-        {casegradient ? <Legend></Legend> : ''}
-        <Projection
-          onHover={handleClick}
-          province={province}
-          casegradient={casegradient}
-          numberlist={numberlist}
-        />
+        <SameLineDiv>
+          {casegradient ? <Legend></Legend> : ''}
+          <Projection
+            onHover={handleClick}
+            province={province}
+            casegradient={casegradient}
+            numberlist={numberlist}
+          />
+        </SameLineDiv>
+
         <InfoContainer
           covidData={covidData}
           province={province}
@@ -252,6 +338,15 @@ const StyledContainer = styled.div`
     flex-direction: column;
   }
 `;
+
+const SameLineDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+/**
+ * functional ----------------------------------------------------
+ */
 
 function getProvinceValues(dataCountry: any): number[] {
   let arr: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -341,7 +436,7 @@ function getProvinceValues(dataCountry: any): number[] {
       arr[location] = getScore(pop, cases);
     }
   }
-  console.log(arr);
+  // console.log(arr);
   return arr;
 }
 
