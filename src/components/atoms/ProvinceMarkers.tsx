@@ -30,17 +30,17 @@ export const ProvinceMarkers: React.FC<ProvinceMarkersProps> = ({
       <StyledKey>Daily Cases: </StyledKey>
       <StyledValue>{covidData.dailyCases}</StyledValue>
       <br />
-      <StyledKey>Culminative Cases: </StyledKey>
-      <StyledValue>{covidData.culminativeCases}</StyledValue>
-      <br />
       <StyledKey>Daily Tested: </StyledKey>
       <StyledValue>{covidData.dailyTested}</StyledValue>
       <br />
-      <StyledKey>Culminative Tested: </StyledKey>
-      <StyledValue>{covidData.culminativeTested}</StyledValue>
-      <br />
       <StyledKey>Daily Deaths: </StyledKey>
       <StyledValue>{covidData.dailyDeaths}</StyledValue>
+      <br />
+      <StyledKey>Culminative Cases: </StyledKey>
+      <StyledValue>{covidData.culminativeCases}</StyledValue>
+      <br />
+      <StyledKey>Culminative Tested: </StyledKey>
+      <StyledValue>{covidData.culminativeTested}</StyledValue>
       <br />
       <StyledKey>Culminative Deaths: </StyledKey>
       <StyledValue>{covidData.culminativeDeaths}</StyledValue>
@@ -68,14 +68,12 @@ const StyledTitle = styled.h1`
 
 const StyledKey = styled(Text)`
   font-size: ${theme.fontSizes.md};
-  color: ${theme.colors.gray[300]};
   font-weight: bold;
   display: inline;
 `;
 
 const StyledValue = styled(Text)`
   font-size: ${theme.fontSizes.md};
-  color: ${theme.colors.gray[300]};
   font-weight: normal;
   display: inline;
   text-transform: capitalize;

@@ -1,10 +1,7 @@
-import { Button } from '@chakra-ui/react';
-import { randomInt } from 'd3-random';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { getAllJSDocTags } from 'typescript';
 import { generateAbbrev } from '../../utils/generateAbbrev';
-import { ButtonEvent, ProvinceName } from '../../utils/types';
+import { ButtonEvent } from '../../utils/types';
 import { Projection } from '../atoms/Projection';
 import { InfoContainer } from '../containers/InfoContainer';
 import { SliderPanel } from '../containers/SliderPanel';
@@ -24,12 +21,11 @@ export interface ICovidData {
   culminativeRecovered: number | string;
 }
 
-export const Main: React.FC<MainProps> = ({}) => {
-  const [province, setProvince] = useState<string>('ontario');
+export const Main: React.FC<MainProps> = () => {
+  const [province, setProvince] = useState<string>('Ontario');
   const [date, setDate] = useState<string>('11-09-2000');
-  const [numberList, changeNumbersList] = useState<number[]>([]);
-  const [caseGradient, setCaseGradient] = useState<boolean>(false);
-  const [sliderPercantage, changeSliderPercantage] = useState<number>(100);
+  const [numberlist, changeNumbersList] = useState<number[]>([]);
+  const [casegradient, setcasegradient] = useState<boolean>(false);
   const [covidData, setCovidData] = useState<ICovidData>({
     activeCases: 0,
     dailyCases: 0,
@@ -41,19 +37,82 @@ export const Main: React.FC<MainProps> = ({}) => {
     culminativeRecovered: 0,
   });
 
+  const populaitons: number[] = [4371000, 5071000, 776827, 521542, 38780, 971395, 44826, 14570000, 156947, 8485000, 1174000, 35874, 1369000];
+  let population;
+
+  console.log(province);
+
+  switch (province) {
+    case 'Alberta': {
+      population = populaitons[0];
+      break;
+    }
+    case 'British Columbia': {
+      population = populaitons[1];
+      break;
+    }
+    case 'New Bruinswick': {
+      population = populaitons[2];
+      break;
+    }
+    case 'Newfoundland and Labrador': {
+      population = populaitons[3];
+      break;
+    }
+    case 'Nunavut': {
+      population = populaitons[4];
+      break;
+    }
+    case 'Nova Scotia': {
+      population = populaitons[5];
+      break;
+    }
+    case 'Northwest Territories': {
+      population = populaitons[6];
+      break;
+    }
+    case 'Ontario': {
+      population = populaitons[7];
+      break;
+    }
+    case 'Prince Edward Island': {
+      population = populaitons[8];
+      break;
+    }
+    case 'Quebec': {
+      population = populaitons[9];
+      break;
+    }
+    case 'Saskatchewan': {
+      population = populaitons[10];
+      break;
+    }
+    case 'Yukon': {
+      population = populaitons[11];
+      break;
+    }
+    case 'Manitoba': {
+      population = populaitons[12];
+      break;
+    }
+    default: {
+      population = populaitons[0];
+      break;
+    }
+  }
+
   const handleClick = (event: ButtonEvent, geo: any) => {
     setProvince(geo.properties.gn_name);
+    onSlide(date);
   };
 
   const handleToggler = () => {
-    console.log(caseGradient);
-    setCaseGradient(!caseGradient);
+    setcasegradient(!casegradient);
   };
 
   // API STUFF ============================================================
 
-  const onSlide = async (date: string, value: number) => {
-    changeSliderPercantage(value);
+  const onSlide = async (date: string) => {
     setDate(date);
     let provinceAbbreviation = generateAbbrev(province); // generate abbreviations
 
@@ -64,36 +123,76 @@ export const Main: React.FC<MainProps> = ({}) => {
       parseInt(dateArray[0])
     );
 
-    if (selectedDateObject.getTime() < Date.now()) {
+    if (selectedDateObject.getTime() < Date.now() - (1000 * 60 * 60 * 24)) {
       const response = await fetch(
         `https://api.opencovid.ca/timeseries?loc=${provinceAbbreviation}&date=${date}`
       );
 
       const data = await response.json();
+
+      let activeCases, dailyCases, dailyTested, dailyDeaths, culminativeCases, culminativeTested, culminativeDeaths, culminativeRecovered;
+
+      try{
+        activeCases =  data.active[0].active_cases;
+      } catch(error) {
+        activeCases = 0;
+      }
+      try{
+        dailyCases =  data.cases[0].cases;
+      } catch(error) {
+        dailyCases = 0;
+      }
+      try{
+        dailyTested =  data.testing[0].testing;
+      } catch(error) {
+        dailyTested = 0;
+      }
+      try{
+        dailyDeaths =  data.mortality[0].deaths;
+      } catch(error) {
+        dailyDeaths = 0;
+      }
+      try{
+        culminativeCases =  data.active[0].cumulative_cases;
+      } catch(error) {
+        culminativeCases = 0;
+      }
+      try{
+        culminativeTested =  data.testing[0].cumulative_testing;
+      } catch(error) {
+        culminativeTested = 0;
+      }
+      try{
+        culminativeDeaths =  data.active[0].cumulative_deaths;
+      } catch(error) {
+        culminativeDeaths = 0;
+      }
+      try{
+        culminativeRecovered =  data.active[0].cumulative_recovered;
+      } catch(error) {
+        culminativeRecovered = 0;
+      }
+      
       setCovidData({
-        activeCases: data.active[0].active_cases,
-        dailyCases: data.cases[0].cases,
-        culminativeCases: data.active[0].cumulative_cases,
-        dailyDeaths: data.mortality[0].deaths,
-        culminativeDeaths: data.active[0].cumulative_deaths,
-        dailyTested: data.testing[0].testing,
-        culminativeTested: data.testing[0].cumulative_testing,
-        culminativeRecovered: data.active[0].cumulative_recovered,
+        activeCases: activeCases,
+        dailyCases: dailyCases,
+        culminativeCases: culminativeCases,
+        dailyDeaths: dailyDeaths,
+        culminativeDeaths: culminativeDeaths,
+        dailyTested: dailyTested,
+        culminativeTested: culminativeTested,
+        culminativeRecovered: culminativeRecovered,
       });
-      // console.log('wefwe');
+      
+      
       const responseCountry = await fetch(
         `https://api.opencovid.ca/timeseries?loc=prov&date=${date}`
       );
       const dataCountry = await responseCountry.json();
 
       changeNumbersList(getProvinceValues(dataCountry.cases));
-    } else {
     }
   };
-
-  // useEffect(() => {
-  //   changeNumbersList(getProvinceValues());
-  // }, [date]);
 
   return (
     <>
@@ -101,18 +200,19 @@ export const Main: React.FC<MainProps> = ({}) => {
         <Projection
           onHover={handleClick}
           province={province}
-          caseGradient={caseGradient}
-          numberList={numberList}
+          casegradient={casegradient}
+          numberlist={numberlist}
         />
         <InfoContainer
           covidData={covidData}
           province={province}
+          population={population}
           onTogglerClick={handleToggler}
-          caseGradient={caseGradient}
+          casegradient={casegradient}
         />
       </StyledContainer>
 
-      <SliderPanel handleSlideChange={onSlide} sliderPercantage={sliderPercantage}></SliderPanel>
+      <SliderPanel handleSliderChange={onSlide}></SliderPanel>
     </>
   );
 };
@@ -133,11 +233,11 @@ const StyledContainer = styled.div`
 
 function getProvinceValues(dataCountry: any): number[] {
   let arr: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-  // console.log(dataCountry);
   for (let item of dataCountry) {
     let pop;
     let cases = item.cumulative_cases;
     let location = 0;
+
     switch (item.province) {
       case 'Alberta': {
         pop = 4371000;
@@ -210,11 +310,10 @@ function getProvinceValues(dataCountry: any): number[] {
 
     arr[location] = getScore(pop, cases);
   }
-  console.log(arr);
   return arr;
 }
 
 function getScore(pop: number, cases: number) {
   // console.log(pop);
-  return (cases / pop) * 5000;
+  return (cases / pop) * 7000;
 }

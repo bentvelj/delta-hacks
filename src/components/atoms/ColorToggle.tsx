@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 interface ColorToggleProps {}
 
-export const ColorToggle: React.FC<ColorToggleProps> = ({}) => {
+export const ColorToggle: React.FC<ColorToggleProps> = () => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (

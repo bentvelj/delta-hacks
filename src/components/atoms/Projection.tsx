@@ -1,9 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 import styled from 'styled-components';
 import theme from '../../theme';
 import { ButtonEvent } from '../../utils/types';
+import { useColorModeValue } from "@chakra-ui/react"
 
 // url to a valid topojson file
 const geoUrl =
@@ -12,16 +12,18 @@ const geoUrl =
 interface ProjectionProps {
   onHover: (event: ButtonEvent, geo: any) => void;
   province: string;
-  numberList: number[];
-  caseGradient: boolean;
+  numberlist: number[];
+  casegradient: boolean;
 }
 
 export const Projection: React.FC<ProjectionProps> = ({
   onHover,
-  numberList,
+  numberlist,
   province = 'ontario',
-  caseGradient,
+  casegradient,
 }) => {
+  const colour = useColorModeValue(theme.colors.gray[900], theme.colors.gray[300]);
+
   return (
     <StyledProjectionContainer className="div-projection">
       <StyledComposableMap
@@ -35,18 +37,18 @@ export const Projection: React.FC<ProjectionProps> = ({
               // console.log(i);
               return (
                 <StyledProvince
-                  numberList={numberList}
-                  caseGradient={caseGradient}
+                  numberlist={numberlist}
+                  casegradient={casegradient}
                   province={province}
                   key={i}
-                  keyVal={i}
+                  keyval={i}
                   geography={geo}
-                  stroke={theme.colors.gray[300]}
-                  strokeWidth="0.5px"
+                  stroke={colour}
+                  strokeWidth="1px"
                   fill={
                     province.toLowerCase() !==
                     geo.properties.gn_name.toLowerCase()
-                      ? theme.colors.gray[800]
+                      ? theme.colors.gray[600]
                       : theme.colors.teal[600]
                   }
                   preserveAspectRatio="xMidYMid meet"
@@ -80,22 +82,22 @@ const StyledGeographies = styled(Geographies)``;
 
 const StyledProvince = styled(Geography)<{
   province: string;
-  caseGradient: boolean;
-  numberList: number[];
-  keyVal: number;
+  casegradient: boolean;
+  numberlist: number[];
+  keyval: number;
 }>`
   fill: ${(props) => {
-    if (props.caseGradient) {
-      return colourSelector(props.numberList[props.keyVal]);
-      // return `rgb(${props.numberList[props.keyVal]}, ${
-      //   255 - props.numberList[props.keyVal]
+    if (props.casegradient) {
+      return colourSelector(props.numberlist[props.keyval]);
+      // return `rgb(${props.numberlist[props.keyval]}, ${
+      //   255 - props.numberlist[props.keyval]
       // }, 0)`;
     }
   }};
   :hover {
     cursor: pointer;
     fill: ${(props) => {
-      if (!props.caseGradient) {
+      if (!props.casegradient) {
         return props.geography.properties.gn_name.toLowerCase() !==
           props.province.toLowerCase()
           ? theme.colors.gray[700]
@@ -111,33 +113,33 @@ const StyledProvince = styled(Geography)<{
 
   :active {
     fill: ${(props) => {
-      if (!props.caseGradient) {
+      if (!props.casegradient) {
         return theme.colors.teal[600];
       }
     }};
   }
 `;
 
-function colourSelector(keyValue: number) {
-  if (keyValue < 10) {
+function colourSelector(keyvalue: number) {
+  if (keyvalue < 10) {
     return theme.colors.red[50];
-  } else if (keyValue >= 10 && keyValue < 20) {
+  } else if (keyvalue >= 10 && keyvalue < 20) {
     return theme.colors.red[100];
-  } else if (keyValue >= 20 && keyValue < 30) {
+  } else if (keyvalue >= 20 && keyvalue < 30) {
     return theme.colors.red[200];
-  } else if (keyValue >= 30 && keyValue < 40) {
+  } else if (keyvalue >= 30 && keyvalue < 40) {
     return theme.colors.red[300];
-  } else if (keyValue >= 40 && keyValue < 50) {
+  } else if (keyvalue >= 40 && keyvalue < 50) {
     return theme.colors.red[400];
-  } else if (keyValue >= 50 && keyValue < 60) {
+  } else if (keyvalue >= 50 && keyvalue < 60) {
     return theme.colors.red[500];
-  } else if (keyValue >= 60 && keyValue < 70) {
+  } else if (keyvalue >= 60 && keyvalue < 70) {
     return theme.colors.red[600];
-  } else if (keyValue >= 70 && keyValue < 80) {
+  } else if (keyvalue >= 70 && keyvalue < 80) {
     return theme.colors.red[700];
-  } else if (keyValue >= 80 && keyValue < 90) {
+  } else if (keyvalue >= 80 && keyvalue < 90) {
     return theme.colors.red[800];
-  } else if (keyValue >= 90) {
+  } else if (keyvalue >= 90) {
     return theme.colors.red[900];
   }
 }
