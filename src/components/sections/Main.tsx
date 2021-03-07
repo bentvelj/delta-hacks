@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/react';
 import { randomInt } from 'd3-random';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { getAllJSDocTags } from 'typescript';
 import { ButtonEvent, ProvinceName } from '../../utils/types';
@@ -15,6 +15,7 @@ interface MainProps {
 export const Main: React.FC<MainProps> = ({}) => {
   const [province, setProvince] = useState<string>('ontario');
   const [date, setDate] = useState<string>('11-09-2000');
+  const [numberList, changeNumbersList] = useState<number[]>([]);
   const [caseGradient, setCaseGradient] = useState<boolean>(false);
   // const [numbersList, changeNumbersList] = useState<number[]>([]);
 
@@ -33,25 +34,25 @@ export const Main: React.FC<MainProps> = ({}) => {
   const handleDateChangeEvent = (date: string) => {
     console.log(date);
     setDate(date);
-    // getData();
   };
 
+  useEffect(() => {
+    changeNumbersList(getProvinceValues());
+  }, [date]);
   const handleToggler = () => {
     console.log(caseGradient);
     setCaseGradient(!caseGradient);
   };
-  // const getData = () => {
-  //   var arr = [];
-  //   for (var i = 0; i >= 12; i++) {
-  //     arr.push(Math.floor(Math.random() * 100));
-  //   }
-  //   changeNumbersList(arr);
-  // };
 
   return (
     <>
       <StyledContainer>
-        <Projection onHover={handleClick} province={province} caseGradient={caseGradient}  />
+        <Projection
+          onHover={handleClick}
+          province={province}
+          caseGradient={caseGradient}
+          numberList={numberList}
+        />
         <InfoContainer
           province={province}
           onTogglerClick={handleToggler}
@@ -74,3 +75,12 @@ const StyledContainer = styled.div`
     flex-direction: column;
   }
 `;
+
+function getProvinceValues(): number[] {
+  let arr: number[] = [];
+  for (let i = 0; i <= 12; i++) {
+    arr.push(Math.floor(Math.random() * 100));
+  }
+  // console.log(arr);
+  return arr;
+}
