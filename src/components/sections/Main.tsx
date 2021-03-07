@@ -16,6 +16,14 @@ export const Main: React.FC<MainProps> = ({}) => {
   const [date, setDate] = useState<string>('11-09-2000');
   // const [numbersList, changeNumbersList] = useState<number[]>([]);
 
+  // const getData = () => {
+  //   var arr = [];
+  //   for (var i = 0; i >= 12; i++) {
+  //     arr.push(Math.floor(Math.random() * 100));
+  //   }
+  //   changeNumbersList(arr);
+  // };
+
   const handleClick = (event: ButtonEvent, geo: any) => {
     setProvince(geo.properties.gn_name);
   };
@@ -26,13 +34,17 @@ export const Main: React.FC<MainProps> = ({}) => {
     // getData();
   };
 
-  // const getData = () => {
-  //   var arr = [];
-  //   for (var i = 0; i >= 12; i++) {
-  //     arr.push(Math.floor(Math.random() * 100));
-  //   }
-  //   changeNumbersList(arr);
-  // };
+  fetch(`https://api.opencovid.ca/timeseries?stat=cases&loc=prov&date=01-09-2020`)
+            .then(response => response.json())
+            .then(function (data) {
+
+                let lat = data.results[0].geometry.location.lat;
+                let lng = data.results[0].geometry.location.lng;
+                obj.setState({ location: { latitude: lat, longitude: lng } })
+            })
+            .catch(err => {
+                console.log(err)
+  })
 
   return (
     <>
