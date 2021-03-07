@@ -14,10 +14,14 @@ interface MainProps {
 }
 
 export interface ICovidData {
-  activeCases: number;
-  culminativeCases: number;
-  culminativeDeaths: number;
-  culminativeRecovered: number;
+    activeCases: number,
+    dailyCases: number,
+    culminativeCases: number,
+    dailyDeaths: number,
+    culminativeDeaths: number,
+    dailyTested: number,
+    culminativeTested: number,
+    culminativeRecovered: number
 }
 
 export const Main: React.FC<MainProps> = ({}) => {
@@ -55,6 +59,15 @@ export const Main: React.FC<MainProps> = ({}) => {
   // API STUFF ============================================================
 
   const onSlide = async () => {
+    let provinceAbbreviation = generateAbbrev(province); // generate abbreviations
+
+    let dateArray = date.split('-');
+    let selectedDateObject = new Date(
+      parseInt(dateArray[2]),
+      parseInt(dateArray[1]) - 1,
+      parseInt(dateArray[0])
+    );
+
     if (selectedDateObject.getTime() < Date.now()) {
       const response = await fetch(
         `https://api.opencovid.ca/timeseries?loc=${provinceAbbreviation}&date=${date}`
@@ -69,17 +82,9 @@ export const Main: React.FC<MainProps> = ({}) => {
         dailyTested: data.testing[0].testing,
         culminativeTested: data.testing[0].cumulative_testing,
         culminativeRecovered: data.active[0].cumulative_recovered,
-      console.log(covidData);
+      });
     }
   };
-  let provinceAbbreviation = generateAbbrev(province); // generate abbreviations
-
-  let dateArray = date.split('-');
-  let selectedDateObject = new Date(
-    parseInt(dateArray[2]),
-    parseInt(dateArray[1]) - 1,
-    parseInt(dateArray[0])
-  );
 
   useEffect(() => {
     changeNumbersList(getProvinceValues());
