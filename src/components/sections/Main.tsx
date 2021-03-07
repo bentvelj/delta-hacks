@@ -1,3 +1,4 @@
+import { Button } from '@chakra-ui/react';
 import { randomInt } from 'd3-random';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
@@ -15,6 +16,16 @@ export const Main: React.FC<MainProps> = ({}) => {
   const [province, setProvince] = useState<string>('ontario');
   const [date, setDate] = useState<string>('11-09-2000');
   const [numberList, changeNumbersList] = useState<number[]>([]);
+  const [caseGradient, setCaseGradient] = useState<boolean>(false);
+  // const [numbersList, changeNumbersList] = useState<number[]>([]);
+
+  // const getData = () => {
+  //   var arr = [];
+  //   for (var i = 0; i >= 12; i++) {
+  //     arr.push(Math.floor(Math.random() * 100));
+  //   }
+  //   changeNumbersList(arr);
+  // };
 
   const handleClick = (event: ButtonEvent, geo: any) => {
     setProvince(geo.properties.gn_name);
@@ -28,6 +39,17 @@ export const Main: React.FC<MainProps> = ({}) => {
   useEffect(() => {
     changeNumbersList(getProvinceValues());
   }, [date]);
+  const handleToggler = () => {
+    console.log(caseGradient);
+    setCaseGradient(!caseGradient);
+  };
+  // const getData = () => {
+  //   var arr = [];
+  //   for (var i = 0; i >= 12; i++) {
+  //     arr.push(Math.floor(Math.random() * 100));
+  //   }
+  //   changeNumbersList(arr);
+  // };
 
   return (
     <>
@@ -35,9 +57,14 @@ export const Main: React.FC<MainProps> = ({}) => {
         <Projection
           onHover={handleClick}
           province={province}
+          caseGradient={caseGradient}
           numberList={numberList}
         />
-        <InfoContainer province={province} />
+        <InfoContainer
+          province={province}
+          onTogglerClick={handleToggler}
+          caseGradient={caseGradient}
+        />
       </StyledContainer>
 
       <SliderPanel onDateChange={handleDateChangeEvent}></SliderPanel>

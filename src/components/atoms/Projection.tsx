@@ -1,15 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {
-  ComposableMap,
-  Geographies,
-  Geography,
-  GeographyProps,
-} from 'react-simple-maps';
+import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 import styled from 'styled-components';
 import theme from '../../theme';
-import { ButtonEvent, ProvinceName } from '../../utils/types';
-import { ProvinceMarkers } from './ProvinceMarkers';
+import { ButtonEvent } from '../../utils/types';
 
 // url to a valid topojson file
 const geoUrl =
@@ -19,12 +13,13 @@ interface ProjectionProps {
   onHover: (event: ButtonEvent, geo: any) => void;
   province: string;
   numberList: number[];
+  caseGradient: boolean;
 }
 
 export const Projection: React.FC<ProjectionProps> = ({
   onHover,
-  province,
   numberList,
+  province = 'ontario',
 }) => {
   return (
     <StyledProjectionContainer className="div-projection">
@@ -61,6 +56,7 @@ export const Projection: React.FC<ProjectionProps> = ({
 };
 
 const StyledProjectionContainer = styled.div`
+  position: relative;
   height: 600px;
   width: 900px;
   margin: 0;
@@ -80,7 +76,8 @@ const StyledProvince = styled(Geography)<{ province: string }>`
   :hover {
     cursor: pointer;
     fill: ${(props) =>
-      props.geography.properties.gn_name !== props.province
+      props.geography.properties.gn_name.toLowerCase() !==
+      props.province.toLowerCase()
         ? theme.colors.gray[700]
         : theme.colors.teal[500]};
   }

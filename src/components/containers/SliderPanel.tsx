@@ -34,19 +34,6 @@ export const SliderPanel: React.FC<SliderPanelProps> = ({ onDateChange }) => {
     onDateChange(formattedSelectedDate);
   });
 
-  // onDateChange(formattedSelectedDate);
-  /* fetch(`https://api.opencovid.ca/timeseries?stat=cases&loc=prov&date=01-09-2020`)
-            .then(response => response.json())
-            .then(function (data) {
-
-                let lat = data.results[0].geometry.location.lat;
-                let lng = data.results[0].geometry.location.lng;
-                obj.setState({ location: { latitude: lat, longitude: lng } })
-            })
-            .catch(err => {
-                console.log(err)
-            }) */
-
   return (
     <StyledContainer>
       <StyledInnerContainer colorMode={colorMode}>
