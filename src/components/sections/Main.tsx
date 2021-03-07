@@ -40,13 +40,6 @@ export const Main: React.FC<MainProps> = ({}) => {
     console.log(caseGradient);
     setCaseGradient(!caseGradient);
   };
-  // const getData = () => {
-  //   var arr = [];
-  //   for (var i = 0; i >= 12; i++) {
-  //     arr.push(Math.floor(Math.random() * 100));
-  //   }
-  //   changeNumbersList(arr);
-  // };
 
   return (
     <>
