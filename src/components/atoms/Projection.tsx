@@ -106,6 +106,10 @@ const StyledProvince = styled(Geography)<{
   }
 
   :active {
-    fill: ${theme.colors.teal[600]};
+    fill: ${(props) => {
+      if (!props.caseGradient) {
+        return theme.colors.teal[600];
+      }
+    }};
   }
 `;
