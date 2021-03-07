@@ -18,7 +18,7 @@ interface ProjectionProps {
 export const Projection: React.FC<ProjectionProps> = ({
   onHover,
   province = 'ontario',
-  caseGradient
+  caseGradient,
 }) => {
   return (
     <StyledProjectionContainer className="div-projection">
@@ -39,7 +39,8 @@ export const Projection: React.FC<ProjectionProps> = ({
                   stroke={theme.colors.gray[300]}
                   strokeWidth="0.5px"
                   fill={
-                    province.toLowerCase() !== geo.properties.gn_name.toLowerCase()
+                    province.toLowerCase() !==
+                    geo.properties.gn_name.toLowerCase()
                       ? theme.colors.gray[800]
                       : theme.colors.teal[600]
                   }
@@ -72,14 +73,25 @@ const StyledComposableMap = styled(ComposableMap)`
 
 const StyledGeographies = styled(Geographies)``;
 
-const StyledProvince = styled(Geography)<{ province: string; caseGradient: boolean;}>`
+const StyledProvince = styled(Geography)<{
+  province: string;
+  caseGradient: boolean;
+}>`
+  fill: ${(props) => {
+    if (props.caseGradient) {
+      return theme.colors.red[300];
+    }
+  }};
   :hover {
     cursor: pointer;
-    fill: ${(props) =>
-      props.geography.properties.gn_name.toLowerCase() !==
-      props.province.toLowerCase()
-        ? theme.colors.gray[700]
-        : theme.colors.teal[500]};
+    fill: ${(props) => {
+      if (!props.caseGradient) {
+        return props.geography.properties.gn_name.toLowerCase() !==
+          props.province.toLowerCase()
+          ? theme.colors.gray[700]
+          : theme.colors.teal[500];
+      }
+    }};
   }
 
   :focus,
