@@ -27,14 +27,28 @@ export const ProvinceMarkers: React.FC<ProvinceMarkersProps> = ({
       <StyledKey>Active Cases: </StyledKey>
       <StyledValue>{covidData.activeCases}</StyledValue>
       <br />
+      <StyledKey>Daily Cases: </StyledKey>
+      <StyledValue>{covidData.dailyCases}</StyledValue>
+      <br />
       <StyledKey>Culminative Cases: </StyledKey>
       <StyledValue>{covidData.culminativeCases}</StyledValue>
+      <br />
+      <StyledKey>Daily Tested: </StyledKey>
+      <StyledValue>{covidData.dailyTested}</StyledValue>
+      <br />
+      <StyledKey>Culminative Tested: </StyledKey>
+      <StyledValue>{covidData.culminativeTested}</StyledValue>
+      <br />
+      <StyledKey>Daily Deaths: </StyledKey>
+      <StyledValue>{covidData.dailyDeaths}</StyledValue>
       <br />
       <StyledKey>Culminative Deaths: </StyledKey>
       <StyledValue>{covidData.culminativeDeaths}</StyledValue>
       <br />
       <StyledKey>Culminative Recovered: </StyledKey>
       <StyledValue>{covidData.culminativeRecovered}</StyledValue>
+
+      
     </StyledProviceDisplay>
   );
 };
