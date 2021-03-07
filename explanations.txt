@@ -17,3 +17,21 @@ Possible encounters:
 Therefore, Relative chance of infection with masks = 1*(1-MW_C)^2 + (E_OUT*1*)*MW_C*(1-MW_C) + (1*E_IN)*MW_C*(1-MW_C) + E_IN*E_OUT*MW_C^2
 
 Credit: https://aatishb.com/maskmath/index.html
+
+# Vaccinations
+
+- Delay until vaccine is produced (no change until t = release date)
+- Distributation rate (dV/dt % gets vaxxed per day)
+- Vaccine efficacy % Factor into the B
+
+Let V(t) = The number of people vaccinated (%)
+Let P = The probability that someone is vaccinated => V(t) / S
+Let E = The probability you get infected (and therefore infect) while vaccinated
+
+Possible encounters
+    No Vax --> No Vax | Probability of Occurence = (1-P)^2 | Relative Infection Chance = 1
+    Vax --> No Vax | Probability of Occurence = P*(1-P) | Relative Infection Chance = E*1
+    No Vax --> Vax | Probability of Occurence = (1-P)*P | Relative Infection Chance = 1*E
+    Vax --> Vax | Probability of Occurence = P^2 | Relative Infection Chance = E^2
+
+    Therefore, Relative chance of infection with vaccines = (1-P)^2 + 2*P*(1-P)*E + P^2*E^2

@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.integrate import odeint
 import matplotlib.pyplot as plt
+   
 
 N = 100 # Initial population
 R0 = 0 # Initial recovered - immune or dead
@@ -15,7 +16,7 @@ MW_C = 0 # Mask-wearing compliance, 0 = no masks, 1 = everyone wears mask
 # Assume masks reduce by 50% both ways?
 E_IN = 0.5
 E_OUT = 0.5
-
+V0 = 0
 # Unsimplified
 # MASK_FACTOR = 1*(1-MW_C)**2 + (E_OUT*1*)*MW_C*(1-MW_C) + (1*E_IN)*MW_C*(1-MW_C) + E_IN*E_OUT*MW_C**2;
 
@@ -30,10 +31,26 @@ MASK_FACTOR = (1-MW_C)**2 + E_OUT*MW_C*(1-MW_C) + E_IN*MW_C*(1-MW_C) + E_IN*E_OU
 B = B*MASK_FACTOR
 
 # A grid of time points (in days)
-t = np.linspace(0, 160, 160)
+RANGE_END = 160
+INTERVALS = 160
+t = np.linspace(0, RANGE_END, INTERVALS)
+vaccine_offset = 10
+vaccine_effective = 0.08
+V = np.ndarray(shape=(1,INTERVALS),dtype=float,order='F')[0]
 
-def derivative(y, t, N, beta, gamma):
+def dVdt(t,vaccine_offset):
+    return 0.0 if t < vaccine_offset else (t-vaccine_offset)**0.75
+
+for i in range(INTERVALS):
+    V[i] = dVdt(i,vaccine_offset)
+
+print(V)
+def derivative(y, t, N, beta, gamma,vaccine_effective):
     S, I, R = y
+    if int(t) >= INTERVALS:
+        t = INTERVALS-1
+    V_FACTOR = (1-V[int(t)]/S)**2 + 2*V[int(t)]/S*(1-V[int(t)]/S)*vaccine_effective + (V[int(t)]/S)**2*vaccine_effective**2
+    beta *= V_FACTOR
     dSdt = -beta * S * I / N
     dIdt = beta * S * I / N - gamma * I
     dRdt = gamma * I
@@ -41,8 +58,9 @@ def derivative(y, t, N, beta, gamma):
 
 # Initial conditions vector
 y0 = (S0, I0, R0)
+
 # Integrate the SIR equations over the time grid, t.
-ret = odeint(derivative, y0, t, args=(N, B, Y))
+ret = odeint(derivative, y0, t, args=(N, B, Y,vaccine_effective))
 S, I, R = ret.T
 
 # Plot the data on three separate curves for S(t), I(t) and R(t)
@@ -53,6 +71,7 @@ ax.plot(t, I/N, 'r', alpha=0.5, lw=2, label='Infected')
 #ax.plot(t, (R/1000), 'g', alpha=0.5, lw=2, label='Recovered with immunity')
 ax.plot(t, R/N*(1-D), 'g', alpha=0.5, lw=2, label='Recovered with immunity')
 ax.plot(t, R/N*D, 'k', alpha=0.5,lw=2, label='Fockin Dead')
+ax.plot(t, V/N, 'cyan',alpha=0.5,lw=2, label='vax')
 ax.set_xlabel('Time /days')
 ax.set_ylabel('Number (1000s)')
 ax.set_ylim(0,1.2)
@@ -63,4 +82,4 @@ legend = ax.legend()
 legend.get_frame().set_alpha(0.5)
 for spine in ('top', 'right', 'bottom', 'left'):
     ax.spines[spine].set_visible(False)
-plt.savefig('foo.png')
+plt.savefig('foo1.png')
