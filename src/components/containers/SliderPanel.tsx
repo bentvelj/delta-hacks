@@ -27,9 +27,6 @@ export const SliderPanel: React.FC<SliderPanelProps> = ({ onDateChange, onSlideC
     (selectedDate.getMonth() + 1) +
     '-' +
     selectedDate.getFullYear();
-    
-  console.log('formateed date', formattedSelectedDate);
-  console.log('selected date', selectedDate.toString());
 
   useEffect(() => {
     onDateChange(formattedSelectedDate);

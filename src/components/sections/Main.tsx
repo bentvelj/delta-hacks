@@ -44,19 +44,20 @@ export const Main: React.FC<MainProps> = ({}) => {
   // API STUFF ============================================================
 
   const onSlide = async () => {
-    const response = await fetch(
-      `https://api.opencovid.ca/timeseries?loc=${provinceAbbreviation}&date=${date}`
-    );
-    const data = await response.json();
-    setCovidDate({
-      activeCases: data.active[0].active_cases,
-      culminativeCases: data.active[0].cumulative_cases,
-      culminativeDeaths: data.active[0].cumulative_deaths,
-      culminativeRecovered: data.active[0].cumulative_recovered,
-    });
-    console.log(covidDate);
+    if (selectedDateObject.getTime() < Date.now()) {
+      const response = await fetch(
+        `https://api.opencovid.ca/timeseries?loc=${provinceAbbreviation}&date=${date}`
+      );
+      const data = await response.json();
+      setCovidDate({
+        activeCases: data.active[0].active_cases,
+        culminativeCases: data.active[0].cumulative_cases,
+        culminativeDeaths: data.active[0].cumulative_deaths,
+        culminativeRecovered: data.active[0].cumulative_recovered,
+      });
+      console.log(covidDate);
+    }
   };
-
   let provinceAbbreviation = generateAbbrev(province); // generate abbreviations
 
   let dateArray = date.split('-');
@@ -68,6 +69,26 @@ export const Main: React.FC<MainProps> = ({}) => {
 
   useEffect(() => {
     changeNumbersList(getProvinceValues());
+
+    // if (selectedDateObject.getTime() < Date.now()) {
+    //   fetch(
+    //     `https://api.opencovid.ca/timeseries?loc=${provinceAbbreviation}&date=${date}`
+    //   )
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //       //console.log(data.active[0]);
+    //       activeCases = data.active[0].active_cases;
+    //       culminativeCases = data.active[0].cumulative_cases;
+    //       culminativeDeaths = data.active[0].cumulative_deaths;
+    //       culminativeRecovered = data.active[0].cumulative_recovered;
+    //     })
+    //     .catch((err) => console.log(err));
+
+    //   console.log('ACTIVE_CASES', activeCases);
+    //   console.log('CULMINATIVE_CASES', culminativeCases);
+    //   console.log(culminativeDeaths);
+    //   console.log(culminativeRecovered);
+    // }
   }, [date]);
 
   return (
