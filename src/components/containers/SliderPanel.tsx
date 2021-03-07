@@ -49,11 +49,7 @@ export const SliderPanel: React.FC<SliderPanelProps> = ({
           aria-label="slider-ex-2"
           colorScheme="teal"
           defaultValue={sliderPercantage}
-<<<<<<< HEAD
-          onChange={(value) => {changeSliderPercantage(value); onSlideChangeTwo() }}
-=======
           onChange={(value) => onSlideChange(value)}
->>>>>>> a0f1784bdc14ac2fa5f3e7aaaf0c6cf180d2f18d
         >
           <SliderTrack>
             <SliderFilledTrack />

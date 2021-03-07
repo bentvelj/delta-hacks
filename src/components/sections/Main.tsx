@@ -130,11 +130,89 @@ const StyledContainer = styled.div`
 `;
 
 function getProvinceValues(dataCountry: any): number[] {
-  let arr: number[] = [];
+  let arr: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   // console.log(dataCountry);
   for (let item of dataCountry) {
-    if (item.province !== 'Repariated') {
+    let pop;
+    let cases = item.cumulative_cases;
+    let location = 0;
+    switch (item.province) {
+      case 'Alberta': {
+        pop = 4371000;
+        location = 2;
+        break;
+      }
+      case 'BC': {
+        pop = 5071000;
+        location = 3;
+        break;
+      }
+
+      case 'New Bruinswick': {
+        pop = 776827;
+        location = 9;
+        break;
+      }
+      case 'NL': {
+        pop = 521542;
+        location = 11;
+        break;
+      }
+      case 'Nunavut': {
+        pop = 38780;
+        location = 4;
+        break;
+      }
+      case 'Nova Scotia': {
+        pop = 971395;
+        location = 10;
+        break;
+      }
+      case 'NWT': {
+        pop = 44826;
+        location = 5;
+        break;
+      }
+      case 'Ontario': {
+        pop = 14570000;
+        location = 7;
+        break;
+      }
+      case 'PEI': {
+        pop = 156947;
+        location = 12;
+        break;
+      }
+      case 'Quebec': {
+        pop = 8485000;
+        location = 8;
+        break;
+      }
+      case 'Saskatchewan': {
+        pop = 1174000;
+        location = 1;
+        break;
+      }
+      case 'Yukon': {
+        pop = 35874;
+        location = 6;
+        break;
+      }
+      default: {
+        //manitoba values
+        pop = 1369000;
+        location = 0;
+        break;
+      }
     }
+
+    arr[location] = getScore(pop, cases);
   }
+  console.log(arr);
   return arr;
+}
+
+function getScore(pop: number, cases: number) {
+  // console.log(pop);
+  return (cases / pop) * 5000;
 }
