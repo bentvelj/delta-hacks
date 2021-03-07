@@ -210,15 +210,15 @@ export const Main: React.FC<MainProps> = () => {
         `https://api.opencovid.ca/timeseries?loc=prov&date=${date}`
       );
       const dataCountry = await responseCountry.json();
-
-      changeNumbersList(getProvinceValues(dataCountry.cases));
+      console.log(dataCountry);
+      changeNumbersList(getProvinceValues(dataCountry.active));
     }
   };
 
   return (
     <>
       <StyledContainer>
-        <Legend></Legend>
+        {casegradient ? <Legend></Legend> : ''}
         <Projection
           onHover={handleClick}
           province={province}
@@ -255,11 +255,11 @@ const StyledContainer = styled.div`
 
 function getProvinceValues(dataCountry: any): number[] {
   let arr: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-  // console.log(dataCountry);
+  console.log(dataCountry);
   for (let item of dataCountry) {
     // console.log(item);
     let pop = 0;
-    let cases = item.cases;
+    let cases = item.active_cases;
     let location = 0;
     if (item.province !== 'Repatriated') {
       switch (item.province) {
@@ -346,5 +346,5 @@ function getProvinceValues(dataCountry: any): number[] {
 }
 
 function getScore(pop: number, cases: number) {
-  return (cases / (pop * 0.0004)) * 100;
+  return (cases / (pop * 0.004)) * 100;
 }

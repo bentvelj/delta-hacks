@@ -19,19 +19,29 @@ export const Legend: React.FC<LegendProps> = ({}) => {
         />
         <StyledMidBox>
           <StyledWordBox>
-            <StyledText>More than 0.04</StyledText>
-            <br />
-            <StyledText>Value of 0</StyledText>
-          </StyledWordBox>
+            <div style={{ marginBottom: 80 }}>
+              <StyledText>More than 0.4</StyledText>
+            </div>
 
-          <svg width="20" height="80">
-            <rect width="20" height="80" />
-          </svg>
+            <StyledText>None</StyledText>
+          </StyledWordBox>
+          <StyledBar>
+            <GradientBar></GradientBar>
+          </StyledBar>
         </StyledMidBox>
       </StyledInnerBox>
     </StyledOuterBox>
   );
 };
+
+const GradientBar = styled.div`
+  border-width: 2px;
+  border-color: black;
+  border-style: solid;
+  width: 15px;
+  height: 120px;
+  background-image: linear-gradient(#63171b, #fff5f5);
+`;
 
 const StyledInnerBox = styled.div`
   height: 80%;
@@ -41,29 +51,37 @@ const StyledInnerBox = styled.div`
 
 const StyledOuterBox = styled.div`
   display: flex;
-  width: 150px;
+  width: 110px;
   min-height: 100px;
   justify-content: center;
   align-items; center;
-  border-weight:3px;
-  border-style: dotted;
+  border-width: 2px;
+  border-color: black;
+  border-style: solid;
   background-color: white;
   color: black;
 `;
 
 const StyledWordBox = styled.div`
-  width: 60%;
+  width: 80%;
 `;
 
 const StyledTitle = styled(Text)`
   font-weight: bold;
-  font-size: 12px;
+  font-size: 10px;
 `;
 
 const StyledText = styled(Text)`
-  font-size: 12px;
+  font-size: 10px;
   display: inline;
+  line-height: 2em;
 `;
 const StyledMidBox = styled.div`
   display: flex;
+`;
+const StyledBar = styled.div`
+width: 20%;
+justify-content: center;
+align-items; center;
+padding 5px 0px;
 `;
