@@ -10,26 +10,44 @@ import {
   SliderThumb,
 } from '@chakra-ui/react';
 
-interface SliderPanelProps {}
+interface SliderPanelProps {
+  onDateChange: (formattedSelectedDate: string) => void;
+}
 
-export const SliderPanel: React.FC<SliderPanelProps> = ({}) => {
+export const SliderPanel: React.FC<SliderPanelProps> = ({ onDateChange }) => {
   const { colorMode } = useColorMode();
-  const [ sliderPercantage, changeSliderPercantage ] = useState(100);
+  const [sliderPercantage, changeSliderPercantage] = useState(100);
 
   const numberOfDaysInFuture = 100;
-  const startDate = new Date("1/25/2020")
-  const presentDate = new Date(Date.now() + (numberOfDaysInFuture * (1000 * 60 * 60 * 24)));
+  const startDate = new Date('1/25/2020');
+  const presentDate = new Date(
+    Date.now() + numberOfDaysInFuture * (1000 * 60 * 60 * 24)
+  );
 
-  const diffOfTimeFromFirstToPresent = Math.abs(presentDate.getTime() - startDate.getTime());
-  const diffOfDaysFromFirstToPresent = Math.ceil(diffOfTimeFromFirstToPresent / (1000 * 60 * 60 * 24)); 
+  const diffOfTimeFromFirstToPresent = Math.abs(
+    presentDate.getTime() - startDate.getTime()
+  );
+  const diffOfDaysFromFirstToPresent = Math.ceil(
+    diffOfTimeFromFirstToPresent / (1000 * 60 * 60 * 24)
+  );
 
-  const diffOfDaysFromFirstToSelected = (sliderPercantage / 100) * diffOfDaysFromFirstToPresent;
-  const diffOfTimeFromFirstToSelected = diffOfDaysFromFirstToSelected * (1000 * 60 * 60 * 24);
+  const diffOfDaysFromFirstToSelected =
+    (sliderPercantage / 100) * diffOfDaysFromFirstToPresent;
+  const diffOfTimeFromFirstToSelected =
+    diffOfDaysFromFirstToSelected * (1000 * 60 * 60 * 24);
 
-  const selectedDate = new Date(startDate.getTime() + diffOfTimeFromFirstToSelected);
-  
-  const formattedSelectedDate = selectedDate.getDay() + '-' + selectedDate.getMonth() + '-' + selectedDate.getFullYear();
+  const selectedDate = new Date(
+    startDate.getTime() + diffOfTimeFromFirstToSelected
+  );
 
+  const formattedSelectedDate =
+    selectedDate.getDay() +
+    '-' +
+    selectedDate.getMonth() +
+    '-' +
+    selectedDate.getFullYear();
+
+  onDateChange(formattedSelectedDate);
   /* fetch(`https://api.opencovid.ca/timeseries?stat=cases&loc=prov&date=01-09-2020`)
             .then(response => response.json())
             .then(function (data) {
@@ -45,7 +63,9 @@ export const SliderPanel: React.FC<SliderPanelProps> = ({}) => {
   return (
     <StyledContainer>
       <StyledInnerContainer colorMode={colorMode}>
-        <StyledInfoWrapper>Date Selected: {selectedDate.toDateString()}</StyledInfoWrapper>
+        <StyledInfoWrapper>
+          Date Selected: {selectedDate.toDateString()}
+        </StyledInfoWrapper>
         <Slider
           aria-label="slider-ex-2"
           colorScheme="teal"
@@ -80,7 +100,7 @@ const StyledInnerContainer = styled.div<{ colorMode: ColorMode }>`
     colorMode === 'light' ? theme.colors.gray[100] : theme.colors.gray[700]};
   border-radius: 10px;
   padding: 20px;
-  box-shadow: ${theme.shadows.lg}
+  box-shadow: ${theme.shadows.lg};
 `;
 
 const StyledInfoWrapper = styled.div``;
