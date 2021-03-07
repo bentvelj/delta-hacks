@@ -271,6 +271,12 @@ export const Main: React.FC<MainProps> = () => {
         culminativeCases =
           pythonAPIData.dataVectors[4].data[
             pythonAPIData.dataVectors[4].data.length - 1
+          ] +
+          pythonAPIData.dataVectors[2].data[
+            pythonAPIData.dataVectors[2].data.length - 1
+          ] +
+          pythonAPIData.dataVectors[1].data[
+            pythonAPIData.dataVectors[1].data.length - 1
           ];
       } catch (error) {
         culminativeCases = 0;
