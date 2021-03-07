@@ -15,3 +15,5 @@ Possible encounters:
     => Reduction in infectivity = 1 - Average relative chance of infection
 
 Therefore, Relative chance of infection with masks = 1*(1-MW_C)^2 + (E_OUT*1*)*MW_C*(1-MW_C) + (1*E_IN)*MW_C*(1-MW_C) + E_IN*E_OUT*MW_C^2
+
+Credit: https://aatishb.com/maskmath/index.html

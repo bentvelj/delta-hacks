@@ -2,7 +2,7 @@ import numpy as np
 from scipy.integrate import odeint
 import matplotlib.pyplot as plt
 
-N = 1000 # Initial population
+N = 100 # Initial population
 R0 = 0 # Initial recovered - immune or dead
 I0 = 3 # Initial infect
 S0 = N - I0 - R0 # Initial susceptible
@@ -48,11 +48,11 @@ S, I, R = ret.T
 # Plot the data on three separate curves for S(t), I(t) and R(t)
 fig = plt.figure(facecolor='w')
 ax = fig.add_subplot(111, facecolor='#dddddd', axisbelow=True)
-ax.plot(t, S/1000, 'b', alpha=0.5, lw=2, label='Susceptible')
-ax.plot(t, I/1000, 'r', alpha=0.5, lw=2, label='Infected')
+ax.plot(t, S/N, 'b', alpha=0.5, lw=2, label='Susceptible')
+ax.plot(t, I/N, 'r', alpha=0.5, lw=2, label='Infected')
 #ax.plot(t, (R/1000), 'g', alpha=0.5, lw=2, label='Recovered with immunity')
-ax.plot(t, (R/1000)*0.8, 'g', alpha=0.5, lw=2, label='Recovered with immunity')
-ax.plot(t, (R/1000)*0.2, 'k', alpha=0.5,lw=2, label='Fockin Dead')
+ax.plot(t, R/N*(1-D), 'g', alpha=0.5, lw=2, label='Recovered with immunity')
+ax.plot(t, R/N*D, 'k', alpha=0.5,lw=2, label='Fockin Dead')
 ax.set_xlabel('Time /days')
 ax.set_ylabel('Number (1000s)')
 ax.set_ylim(0,1.2)
@@ -63,4 +63,4 @@ legend = ax.legend()
 legend.get_frame().set_alpha(0.5)
 for spine in ('top', 'right', 'bottom', 'left'):
     ax.spines[spine].set_visible(False)
-plt.savefig('foo2.png')
+plt.savefig('foo.png')
