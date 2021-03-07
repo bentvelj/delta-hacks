@@ -14,14 +14,14 @@ interface MainProps {
 }
 
 export interface ICovidData {
-  activeCases: number,
-  dailyCases: number,
-  culminativeCases: number,
-  dailyDeaths: number,
-  culminativeDeaths: number,
-  dailyTested: number,
-  culminativeTested: number,
-  culminativeRecovered: number
+  activeCases: number | string;
+  dailyCases: number | string;
+  culminativeCases: number | string;
+  dailyDeaths: number | string;
+  culminativeDeaths: number | string;
+  dailyTested: number | string;
+  culminativeTested: number | string;
+  culminativeRecovered: number | string;
 }
 
 export const Main: React.FC<MainProps> = ({}) => {
@@ -29,7 +29,6 @@ export const Main: React.FC<MainProps> = ({}) => {
   const [date, setDate] = useState<string>('11-09-2000');
   const [numberList, changeNumbersList] = useState<number[]>([]);
   const [caseGradient, setCaseGradient] = useState<boolean>(false);
-
   const [covidData, setCovidData] = useState<ICovidData>({
     activeCases: 0,
     dailyCases: 0,
@@ -43,11 +42,6 @@ export const Main: React.FC<MainProps> = ({}) => {
 
   const handleClick = (event: ButtonEvent, geo: any) => {
     setProvince(geo.properties.gn_name);
-    onSlide();
-  };
-
-  const handleDateChangeEvent = (date: string) => {
-    setDate(date);
   };
 
   const handleToggler = () => {
@@ -57,7 +51,8 @@ export const Main: React.FC<MainProps> = ({}) => {
 
   // API STUFF ============================================================
 
-  const onSlide = async () => {
+  const onSlide = async (date: string) => {
+    setDate(date);
     let provinceAbbreviation = generateAbbrev(province); // generate abbreviations
 
     let dateArray = date.split('-');
@@ -71,6 +66,7 @@ export const Main: React.FC<MainProps> = ({}) => {
       const response = await fetch(
         `https://api.opencovid.ca/timeseries?loc=${provinceAbbreviation}&date=${date}`
       );
+
       const data = await response.json();
       setCovidData({
         activeCases: data.active[0].active_cases,
@@ -107,8 +103,7 @@ export const Main: React.FC<MainProps> = ({}) => {
       </StyledContainer>
 
       <SliderPanel
-        onDateChange={handleDateChangeEvent}
-        onSlideChangeTwo={onSlide}
+        handleSlideChange={onSlide}
       ></SliderPanel>
     </>
   );
