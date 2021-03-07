@@ -122,7 +122,7 @@ class Simulation:
 
 @app.route('/')
 def beans():
-    return "i hope i did good uWu"
+    return "matt was here"
 
 @app.route('/simulate/example')
 def example_fetch():
