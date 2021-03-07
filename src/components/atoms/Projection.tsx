@@ -120,24 +120,24 @@ const StyledProvince = styled(Geography)<{
 
 function colourSelector(keyValue: number) {
   if (keyValue < 10) {
-    return theme.colors.green[200];
+    return theme.colors.red[50];
   } else if (keyValue >= 10 && keyValue < 20) {
-    return theme.colors.green[600];
+    return theme.colors.red[100];
   } else if (keyValue >= 20 && keyValue < 30) {
-    return theme.colors.green[800];
+    return theme.colors.red[200];
   } else if (keyValue >= 30 && keyValue < 40) {
-    return theme.colors.yellow[200];
+    return theme.colors.red[300];
   } else if (keyValue >= 40 && keyValue < 50) {
-    return theme.colors.yellow[400];
+    return theme.colors.red[400];
   } else if (keyValue >= 50 && keyValue < 60) {
-    return theme.colors.yellow[600];
+    return theme.colors.red[500];
   } else if (keyValue >= 60 && keyValue < 70) {
-    return theme.colors.orange[400];
-  } else if (keyValue >= 70 && keyValue < 80) {
-    return theme.colors.orange[700];
-  } else if (keyValue >= 80 && keyValue < 90) {
     return theme.colors.red[600];
-  } else if (keyValue >= 90) {
+  } else if (keyValue >= 70 && keyValue < 80) {
+    return theme.colors.red[700];
+  } else if (keyValue >= 80 && keyValue < 90) {
     return theme.colors.red[800];
+  } else if (keyValue >= 90) {
+    return theme.colors.red[900];
   }
 }
