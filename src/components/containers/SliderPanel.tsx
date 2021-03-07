@@ -12,13 +12,12 @@ import {
 import calculateDate from '../../utils/calculateDate';
 
 interface SliderPanelProps {
-  onDateChange: (formattedSelectedDate: string) => void;
-  onSlideChangeTwo: () => Promise<void>;
+  // onDateChange: (formattedSelectedDate: string) => void;
+  handleSlideChange: (date: string) => Promise<void>;
 }
 
 export const SliderPanel: React.FC<SliderPanelProps> = ({
-  onDateChange,
-  onSlideChangeTwo,
+  handleSlideChange,
 }) => {
   const { colorMode } = useColorMode();
   const [sliderPercantage, changeSliderPercantage] = useState(100);
@@ -31,9 +30,14 @@ export const SliderPanel: React.FC<SliderPanelProps> = ({
     '-' +
     selectedDate.getFullYear();
 
-  useEffect(() => {
-    onDateChange(formattedSelectedDate);
-  });
+  const onSlideChange = (value: number) => {
+    changeSliderPercantage(value);
+    handleSlideChange(formattedSelectedDate);
+  };
+
+  // useEffect(() => {
+  //   onDateChange(formattedSelectedDate);
+  // });
 
   return (
     <StyledContainer>
@@ -45,10 +49,7 @@ export const SliderPanel: React.FC<SliderPanelProps> = ({
           aria-label="slider-ex-2"
           colorScheme="teal"
           defaultValue={sliderPercantage}
-          onChange={(value) => {
-            changeSliderPercantage(value);
-            onSlideChangeTwo();
-          }}
+          onChange={(value) => onSlideChange(value)}
         >
           <SliderTrack>
             <SliderFilledTrack />
