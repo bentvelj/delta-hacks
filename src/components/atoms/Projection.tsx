@@ -12,6 +12,7 @@ const geoUrl =
 interface ProjectionProps {
   onHover: (event: ButtonEvent, geo: any) => void;
   province: string;
+  caseGradient: boolean;
 }
 
 export const Projection: React.FC<ProjectionProps> = ({
