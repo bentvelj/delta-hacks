@@ -51,7 +51,7 @@ export const Main: React.FC<MainProps> = ({}) => {
   return (
     <>
       <StyledContainer>
-        <Projection onHover={handleClick} province={province} />
+        <Projection onHover={handleClick} province={province} caseGradient={caseGradient}  />
         <InfoContainer
           province={province}
           onTogglerClick={handleToggler}
