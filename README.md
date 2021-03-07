@@ -1,4 +1,4 @@
-# COVID Mapper - DeltaHacks 2021 Hackathon Challenge
+# COVID in Canada Mapper - DeltaHacks 2021 Hackathon Challenge
 
 A web application to analyze COVID statistics in Canada from the past, present, and future.
 

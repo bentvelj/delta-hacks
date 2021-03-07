@@ -3,26 +3,26 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface CaseToggleProps {
-  caseGradient: boolean;
+  casegradient: boolean;
   onTogglerClick: () => void;
 }
 
 export const CaseToggle: React.FC<CaseToggleProps> = ({
-  caseGradient,
+  casegradient,
   onTogglerClick,
 }) => {
   return (
     <StyledCaseToggler
       colorScheme={theme.colors.red[200]}
       onClick={onTogglerClick}
-      caseGradient={caseGradient}
+      casegradient={casegradient}
     >
-      {!caseGradient ? 'Toggle Case Gradient' : 'Revert Toggle'}
+      {!casegradient ? 'Toggle Case Gradient' : 'Revert Toggle'}
     </StyledCaseToggler>
   );
 };
 
 const StyledCaseToggler = styled(Button)<CaseToggleProps>`
-  background-color: ${({ caseGradient }) =>
-    !caseGradient ? theme.colors.red[200] : 'white'};
+  background-color: ${({ casegradient }) =>
+    !casegradient ? theme.colors.red[300] : theme.colors.red[500]};
 `;

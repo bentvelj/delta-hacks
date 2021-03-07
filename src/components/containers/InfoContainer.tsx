@@ -1,4 +1,4 @@
-import { ColorMode, useColorMode } from '@chakra-ui/react';
+import { ColorMode, useColorMode, useColorModeValue } from '@chakra-ui/react';
 import React from 'react';
 import styled from 'styled-components';
 import theme from '../../theme';
@@ -8,27 +8,31 @@ import { ICovidData } from '../sections/Main';
 
 interface InfoContainerProps {
   province: string;
+  population: number;
   onTogglerClick: () => void;
-  caseGradient: boolean;
+  casegradient: boolean;
   covidData: ICovidData;
 }
 
 export const InfoContainer: React.FC<InfoContainerProps> = ({
   province,
-  caseGradient,
+  population,
+  casegradient,
   onTogglerClick,
   covidData,
 }) => {
   const { colorMode } = useColorMode();
+  const colour = useColorModeValue(theme.colors.gray[300], theme.colors.gray[700]);
+
   return (
-    <StyledContainer colorMode={colorMode}>
+    <StyledContainer colorMode={colorMode} style={{backgroundColor: colour}}>
       <ProvinceMarkers
         name={province}
-        population={100}
+        population={population}
         covidData={covidData}
       />
       <CaseToggle
-        caseGradient={caseGradient}
+        casegradient={casegradient}
         onTogglerClick={onTogglerClick}
       ></CaseToggle>
     </StyledContainer>
@@ -41,9 +45,6 @@ const StyledContainer = styled.div<{ colorMode: ColorMode }>`
   padding: 15px 20px;
   border-radius: 10px;
   box-shadow: ${theme.shadows.lg};
-  background-color: ${({ colorMode }) =>
-    colorMode === 'light' ? theme.colors.gray[100] : theme.colors.gray[700]};
-
   @media (max-width: 1746px) {
     width: 75%;
     height: auto;

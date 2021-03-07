@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import {
   ColorMode,
@@ -10,15 +10,21 @@ import {
   SliderThumb,
 } from '@chakra-ui/react';
 import calculateDate from '../../utils/calculateDate';
+import calculatePercentage from '../../utils/calculatePercentage';
+import { useColorModeValue } from "@chakra-ui/react"
 
 interface SliderPanelProps {
-  // onDateChange: (formattedSelectedDate: string) => void;
-  handleSlideChange: (date: string) => Promise<void>
+  handleSliderChange: (date: string) => Promise<void>;
 }
 
-export const SliderPanel: React.FC<SliderPanelProps> = ({ handleSlideChange }) => {
+export const SliderPanel: React.FC<SliderPanelProps> = ({
+  handleSliderChange
+}) => {
+  const presentDatePercentage = calculatePercentage();
   const { colorMode } = useColorMode();
-  const [sliderPercantage, changeSliderPercantage] = useState(100);
+  const [sliderPercantage, changeSliderPercantage] = useState(presentDatePercentage);
+
+  const colour = useColorModeValue(theme.colors.gray[300], theme.colors.gray[700]);
 
   const selectedDate = calculateDate(sliderPercantage);
   const formattedSelectedDate =
@@ -28,26 +34,22 @@ export const SliderPanel: React.FC<SliderPanelProps> = ({ handleSlideChange }) =
     '-' +
     selectedDate.getFullYear();
 
-  const onSlideChange = async (value: number) => {
-    changeSliderPercantage(value)
-    await handleSlideChange(formattedSelectedDate);
-  }
-
-  // useEffect(() => {
-  //   onDateChange(formattedSelectedDate);
-  // });
+  const onSlideChange = () => {
+    handleSliderChange(formattedSelectedDate);
+  };
 
   return (
     <StyledContainer>
-      <StyledInnerContainer colorMode={colorMode}>
+      <StyledInnerContainer colorMode={colorMode} style={{backgroundColor: colour}}>
         <StyledInfoWrapper>
           Date Selected: {selectedDate.toDateString()}
         </StyledInfoWrapper>
         <Slider
           aria-label="slider-ex-2"
-          colorScheme="teal"
-          defaultValue={sliderPercantage}
-          onChange={async (value) => await onSlideChange(value)}
+          colorScheme={sliderPercantage <= presentDatePercentage ? "teal" : "red"}
+          defaultValue={presentDatePercentage}
+          onChange={(value) => changeSliderPercantage(value)}
+          onMouseUp={() => onSlideChange()}
         >
           <SliderTrack>
             <SliderFilledTrack />
@@ -74,8 +76,6 @@ const StyledInnerContainer = styled.div<{ colorMode: ColorMode }>`
   width: 75%;
   max-width: 1400px;
   height: 100%;
-  background-color: ${({ colorMode }) =>
-    colorMode === 'light' ? theme.colors.gray[100] : theme.colors.gray[700]};
   border-radius: 10px;
   padding: 20px;
   box-shadow: ${theme.shadows.lg};

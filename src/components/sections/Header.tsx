@@ -1,14 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import theme from '../../theme';
-import { ColorToggle } from '../atoms/ColorToggle';
 import { Logo } from '../atoms/Logo';
-import { MenuItem } from '../atoms/MenuItem';
 import { Menu } from '../containers/Menu';
 
 interface HeaderProps {}
 
-export const Header: React.FC<HeaderProps> = ({}) => {
+export const Header: React.FC<HeaderProps> = () => {
   return (
     <StyledContainer className="container">
       <StyledInnerContainer>

@@ -2,7 +2,6 @@ import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
-import { Projection } from './components/atoms/Projection';
 import { Header } from './components/sections/Header';
 import { Main } from './components/sections/Main';
 import theme from './theme';
