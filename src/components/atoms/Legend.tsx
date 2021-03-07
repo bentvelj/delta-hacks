@@ -10,16 +10,9 @@ export const Legend: React.FC<LegendProps> = ({}) => {
     <StyledOuterBox>
       <StyledInnerBox>
         <StyledTitle>Daily Covid Cases as a % of Total Population</StyledTitle>
-        <hr
-          style={{
-            color: 'red',
-            backgroundColor: 'black',
-            height: 3,
-          }}
-        />
         <StyledMidBox>
           <StyledWordBox>
-            <div style={{ marginBottom: 80 }}>
+            <div style={{ marginBottom: 80, padding: 10 }}>
               <StyledText>More than 0.4</StyledText>
             </div>
 
@@ -35,32 +28,30 @@ export const Legend: React.FC<LegendProps> = ({}) => {
 };
 
 const GradientBar = styled.div`
-  border-width: 2px;
-  border-color: black;
-  border-style: solid;
+  border-color: 1px solid ${theme.colors.black};
+  border-radius: 100px;
   width: 15px;
   height: 120px;
-  background-image: linear-gradient(#63171b, #fff5f5);
+  background-image: linear-gradient(#63171b, #F56565, #fff5f5);
 `;
 
 const StyledInnerBox = styled.div`
   height: 80%;
-  width: 90%;
+  width: 100%;
   justify-content: center;
 `;
 
 const StyledOuterBox = styled.div`
   display: flex;
-  width: 110px;
-  min-height: 100px;
-  height: 180px;
+  width: 170px;
+  /* min-height: 100px; */
+  /* height: 180px; */
   justify-content: center;
-  align-items; center;
-  border-width: 2px;
-  border-color: black;
+  align-items: center;
   border-style: solid;
-  background-color: white;
-  color: black;
+  background-color: ${theme.colors.gray[700]};
+  color: ${theme.colors.white};
+  border-radius: 20px;
 `;
 
 const StyledWordBox = styled.div`
@@ -69,7 +60,8 @@ const StyledWordBox = styled.div`
 
 const StyledTitle = styled(Text)`
   font-weight: bold;
-  font-size: 10px;
+  font-size: 12px;
+  padding: 10px;
 `;
 
 const StyledText = styled(Text)`
@@ -81,8 +73,8 @@ const StyledMidBox = styled.div`
   display: flex;
 `;
 const StyledBar = styled.div`
-width: 20%;
-justify-content: center;
-align-items; center;
-padding 5px 0px;
+  width: 20%;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 0px;
 `;
