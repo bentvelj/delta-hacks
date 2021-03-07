@@ -31,13 +31,14 @@ export const Projection: React.FC<ProjectionProps> = ({
       >
         <StyledGeographies geography={geoUrl} className="g-geographies">
           {({ geographies }) =>
-            geographies.map((geo) => {
+            geographies.map((geo, i) => {
               return (
                 <StyledProvince
                   numberList={numberList}
                   caseGradient={caseGradient}
+                  numberList={numberList}
                   province={province}
-                  key={geo.rsmKey}
+                  key={i}
                   geography={geo}
                   stroke={theme.colors.gray[300]}
                   strokeWidth="0.5px"
@@ -80,10 +81,12 @@ const StyledProvince = styled(Geography)<{
   province: string;
   caseGradient: boolean;
   numberList: number[];
+  key: number;
 }>`
   fill: ${(props) => {
     if (props.caseGradient) {
-      return theme.colors.red[500];
+      console.log(props.numberList[props.key]);
+      return theme.colors.red[300];
     }
   }};
   :hover {
