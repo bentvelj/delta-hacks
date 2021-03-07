@@ -32,12 +32,14 @@ export const Projection: React.FC<ProjectionProps> = ({
         <StyledGeographies geography={geoUrl} className="g-geographies">
           {({ geographies }) =>
             geographies.map((geo, i) => {
+              // console.log(i);
               return (
                 <StyledProvince
                   numberList={numberList}
                   caseGradient={caseGradient}
                   province={province}
                   key={i}
+                  keyVal={i}
                   geography={geo}
                   stroke={theme.colors.gray[300]}
                   strokeWidth="0.5px"
@@ -80,12 +82,14 @@ const StyledProvince = styled(Geography)<{
   province: string;
   caseGradient: boolean;
   numberList: number[];
-  key: number;
+  keyVal: number;
 }>`
   fill: ${(props) => {
     if (props.caseGradient) {
-      console.log(props.numberList[props.key]);
-      return theme.colors.red[300];
+      return colourSelector(props.numberList[props.keyVal]);
+      // return `rgb(${props.numberList[props.keyVal]}, ${
+      //   255 - props.numberList[props.keyVal]
+      // }, 0)`;
     }
   }};
   :hover {
@@ -113,3 +117,27 @@ const StyledProvince = styled(Geography)<{
     }};
   }
 `;
+
+function colourSelector(keyValue: number) {
+  if (keyValue < 10) {
+    return theme.colors.red[50];
+  } else if (keyValue >= 10 && keyValue < 20) {
+    return theme.colors.red[100];
+  } else if (keyValue >= 20 && keyValue < 30) {
+    return theme.colors.red[200];
+  } else if (keyValue >= 30 && keyValue < 40) {
+    return theme.colors.red[300];
+  } else if (keyValue >= 40 && keyValue < 50) {
+    return theme.colors.red[400];
+  } else if (keyValue >= 50 && keyValue < 60) {
+    return theme.colors.red[500];
+  } else if (keyValue >= 60 && keyValue < 70) {
+    return theme.colors.red[600];
+  } else if (keyValue >= 70 && keyValue < 80) {
+    return theme.colors.red[700];
+  } else if (keyValue >= 80 && keyValue < 90) {
+    return theme.colors.red[800];
+  } else if (keyValue >= 90) {
+    return theme.colors.red[900];
+  }
+}
