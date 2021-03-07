@@ -34,8 +34,8 @@ export const Main: React.FC<MainProps> = ({}) => {
   });
 
   const handleClick = (event: ButtonEvent, geo: any) => {
-    console.log(geo.properties.gn_name);
     setProvince(geo.properties.gn_name);
+    onSlide();
   };
 
   const handleDateChangeEvent = (date: string) => {
