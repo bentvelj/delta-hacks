@@ -228,7 +228,7 @@ export const Main: React.FC<MainProps> = () => {
           (1000 * 60 * 60 * 24)
       );
       const dataFetch = await fetch(
-        `https://deltahacks-2021.herokuapp.com/simulate?pop=${population}&i0=${data.active[0].active_cases}&b=1.1&d_r=0.1&vax_offset=${daysTil}&days=${daysTil}`
+        `https://mighty-depths-59110.herokuapp.com/simulate?pop=${population}&i0=${data.active[0].active_cases}&b=1.1&d_r=0.1&vax_offset=${daysTil}&days=${daysTil}`
       );
       const pythonAPIData = await dataFetch.json();
 
@@ -250,7 +250,10 @@ export const Main: React.FC<MainProps> = () => {
         activeCases = 0;
       }
       try {
-        dailyCases = data.cases[0].cases;
+        dailyCases =
+          pythonAPIData.dataVectors[5].data[
+            pythonAPIData.dataVectors[5].data.length - 1
+          ];
       } catch (error) {
         dailyCases = 0;
       }
@@ -265,7 +268,10 @@ export const Main: React.FC<MainProps> = () => {
         dailyDeaths = 0;
       }
       try {
-        culminativeCases = data.active[0].cumulative_cases;
+        culminativeCases =
+          pythonAPIData.dataVectors[4].data[
+            pythonAPIData.dataVectors[4].data.length - 1
+          ];
       } catch (error) {
         culminativeCases = 0;
       }
@@ -275,12 +281,18 @@ export const Main: React.FC<MainProps> = () => {
         culminativeTested = 0;
       }
       try {
-        culminativeDeaths = data.active[0].cumulative_deaths;
+        culminativeDeaths =
+          pythonAPIData.dataVectors[4].data[
+            pythonAPIData.dataVectors[4].data.length - 1
+          ];
       } catch (error) {
         culminativeDeaths = 0;
       }
       try {
-        culminativeRecovered = data.active[0].cumulative_recovered;
+        culminativeRecovered =
+          pythonAPIData.dataVectors[2].data[
+            pythonAPIData.dataVectors[2].data.length - 1
+          ];
       } catch (error) {
         culminativeRecovered = 0;
       }
