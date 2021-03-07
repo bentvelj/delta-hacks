@@ -1,0 +1,17 @@
+# Mask Wearing
+
+Let P = The probability that someone wears a Mask
+Let E_OUT = The probability of OUTGOING infection with mask (prob that viral particles escape)
+Let E_IN = The probability of INCOMING infection with mask (prob that viral particles make it in)
+
+Possible encounters:
+    NO MASK ---> NO MASK | Probability of Occurence = (1-P)^2 | Relative Infection Chance = 1
+    MASK ---> NO MASK | Probability of Occurence = P(1-P) | Relative Infection Chance = E_OUT*1 
+    NO MASK ---> MASK | Probability of Occurence = P(1-P) | Relative Infection Chance = 1*E_IN
+    MASK ---> MASK | Probability of Occurence = P^2 | Relative Infection Chance = E_IN*E_OUT
+
+    => Average relative chance of infection = Sum of each case's infection chance * the probability of that case occurring
+
+    => Reduction in infectivity = 1 - Average relative chance of infection
+
+Therefore, Relative chance of infection with masks = 1*(1-MW_C)^2 + (E_OUT*1*)*MW_C*(1-MW_C) + (1*E_IN)*MW_C*(1-MW_C) + E_IN*E_OUT*MW_C^2
