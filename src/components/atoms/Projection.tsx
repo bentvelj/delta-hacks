@@ -28,6 +28,7 @@ export const Projection: React.FC<ProjectionProps> = ({ onHover, province }) => 
             geographies.map((geo) => {
               return (
                 <StyledProvince
+                  province={province}
                   key={geo.rsmKey}
                   geography={geo}
                   stroke={theme.colors.gray[300]}
@@ -61,10 +62,10 @@ const StyledComposableMap = styled(ComposableMap)`
 
 const StyledGeographies = styled(Geographies)``;
 
-const StyledProvince = styled(Geography)`
+const StyledProvince = styled(Geography)<{province: string}>`
   :hover {
     cursor: pointer;
-    fill: ${(props) => props.geography.properties.gn_name === props.province ? theme.colors.gray[700]};
+    fill: ${(props) => props.geography.properties.gn_name !== props.province ? theme.colors.gray[700]: theme.colors.teal[500]};
   }
 
   :focus,
