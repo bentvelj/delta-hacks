@@ -28,6 +28,7 @@ export const Main: React.FC<MainProps> = ({}) => {
   // };
 
   const handleClick = (event: ButtonEvent, geo: any) => {
+    console.log(geo.properties.gn_name);
     setProvince(geo.properties.gn_name);
   };
 
@@ -43,6 +44,77 @@ export const Main: React.FC<MainProps> = ({}) => {
     console.log(caseGradient);
     setCaseGradient(!caseGradient);
   };
+
+  let provinceAbbreviation;
+
+  switch(province) {
+    case 'Ontario':
+      provinceAbbreviation = 'ON';
+      break;
+    case 'Manitoba':
+      provinceAbbreviation = 'MB';
+      break;
+    case 'Saskatchewan':
+      provinceAbbreviation = 'SK';
+      break;
+    case 'Alberta':
+      provinceAbbreviation = 'AB';
+      break;
+    case 'British Columbia':
+      provinceAbbreviation = 'BC';
+      break;
+    case 'Yukon':
+      provinceAbbreviation = 'YT';
+      break;
+    case 'Northwest Territories':
+      provinceAbbreviation = 'NT';
+      break;
+    case 'Nunavut':
+      provinceAbbreviation = 'NU';
+      break;
+    case 'Newfoundland and Labrador':
+      provinceAbbreviation = 'NL';
+      break;
+    case 'Prince Edward Island':
+      provinceAbbreviation = 'PE';
+      break;
+    case 'Nova Scotia':
+      provinceAbbreviation = 'NS';
+      break;
+    case 'New Brunswick':
+      provinceAbbreviation = 'NB';
+      break;
+    case 'Quebec':
+      provinceAbbreviation = 'QC';
+      break;
+    default:
+      provinceAbbreviation = "ON";
+  }
+
+  let activeCases;
+  let culminativeCases;
+  let culminativeDeaths;
+  let culminativeRecovered;
+
+  console.log(`https://api.opencovid.ca/timeseries?loc=${provinceAbbreviation}&date=${date}`)
+
+  let dateArray = date.split("-");
+  let selectedDateObject = new Date(parseInt(dateArray[2]), parseInt(dateArray[1]) - 1, parseInt(dateArray[0]));  
+
+  if(selectedDateObject.getTime() < Date.now()) {
+    fetch(`https://api.opencovid.ca/timeseries?loc=${provinceAbbreviation}&date=${date}`).then(response => response.json()).then(function (data) {
+      //console.log(data.active[0]);
+      activeCases = data.active[0].active_cases;
+      culminativeCases = data.active[0].cumulative_cases;
+      culminativeDeaths = data.active[0].cumulative_deaths;
+      culminativeRecovered = data.active[0].cumulative_recovered;   
+    }).catch(err => console.log(err));
+
+    console.log(activeCases);
+    console.log(culminativeCases);
+    console.log(culminativeDeaths);
+    console.log(culminativeRecovered);
+  }
 
   return (
     <>

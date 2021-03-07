@@ -35,6 +35,7 @@ export const Projection: React.FC<ProjectionProps> = ({
               // console.log(i);
               return (
                 <StyledProvince
+                  numberList={numberList}
                   caseGradient={caseGradient}
                   numberList={numberList}
                   province={province}
