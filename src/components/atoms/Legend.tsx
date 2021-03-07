@@ -14,8 +14,6 @@ export const Legend: React.FC = () => {
             <div style={{ marginBottom: 80, padding: 10 }}>
               <StyledText>More than 0.4</StyledText>
             </div>
-
-            <StyledText>None</StyledText>
           </StyledWordBox>
           <StyledBar>
             <GradientBar></GradientBar>
