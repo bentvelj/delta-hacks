@@ -18,6 +18,7 @@ interface ProjectionProps {
 export const Projection: React.FC<ProjectionProps> = ({
   onHover,
   province = 'ontario',
+  caseGradient
 }) => {
   return (
     <StyledProjectionContainer className="div-projection">
@@ -31,13 +32,14 @@ export const Projection: React.FC<ProjectionProps> = ({
             geographies.map((geo) => {
               return (
                 <StyledProvince
+                  caseGradient={caseGradient}
                   province={province}
                   key={geo.rsmKey}
                   geography={geo}
                   stroke={theme.colors.gray[300]}
                   strokeWidth="0.5px"
                   fill={
-                    province !== geo.properties.gn_name
+                    province.toLowerCase() !== geo.properties.gn_name.toLowerCase()
                       ? theme.colors.gray[800]
                       : theme.colors.teal[600]
                   }
@@ -70,7 +72,7 @@ const StyledComposableMap = styled(ComposableMap)`
 
 const StyledGeographies = styled(Geographies)``;
 
-const StyledProvince = styled(Geography)<{ province: string }>`
+const StyledProvince = styled(Geography)<{ province: string; caseGradient: boolean;}>`
   :hover {
     cursor: pointer;
     fill: ${(props) =>
