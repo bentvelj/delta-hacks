@@ -2,17 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 import theme from '../../theme';
 import { Text } from '@chakra-ui/react';
+import { ICovidData } from '../sections/Main';
 
 interface ProvinceMarkersProps {
   name: string;
   population: number;
-  cases: number;
+  covidData: ICovidData
 }
 
 export const ProvinceMarkers: React.FC<ProvinceMarkersProps> = ({
   name,
   population,
-  cases,
+  covidData,
 }) => {
   return (
     <StyledProviceDisplay>
@@ -23,8 +24,17 @@ export const ProvinceMarkers: React.FC<ProvinceMarkersProps> = ({
       <StyledKey>Population: </StyledKey>
       <StyledValue>{population}</StyledValue>
       <br />
-      <StyledKey>Cases: </StyledKey>
-      <StyledValue>{cases}</StyledValue>
+      <StyledKey>Active Cases: </StyledKey>
+      <StyledValue>{covidData.activeCases}</StyledValue>
+      <br />
+      <StyledKey>Culminative Cases: </StyledKey>
+      <StyledValue>{covidData.culminativeCases}</StyledValue>
+      <br />
+      <StyledKey>Culminative Deaths: </StyledKey>
+      <StyledValue>{covidData.culminativeDeaths}</StyledValue>
+      <br />
+      <StyledKey>Culminative Recovered: </StyledKey>
+      <StyledValue>{covidData.culminativeRecovered}</StyledValue>
     </StyledProviceDisplay>
   );
 };

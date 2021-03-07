@@ -4,28 +4,33 @@ import styled from 'styled-components';
 import theme from '../../theme';
 import { CaseToggle } from '../atoms/CaseToggle';
 import { ProvinceMarkers } from '../atoms/ProvinceMarkers';
+import { ICovidData } from '../sections/Main';
 
 interface InfoContainerProps {
   province: string;
   onTogglerClick: () => void;
   caseGradient: boolean;
+  covidData: ICovidData;
 }
 
 export const InfoContainer: React.FC<InfoContainerProps> = ({
   province,
   caseGradient,
   onTogglerClick,
+  covidData,
 }) => {
   const { colorMode } = useColorMode();
   return (
     <StyledContainer colorMode={colorMode}>
-      <ProvinceMarkers name={province} population={100} cases={30} />
+      <ProvinceMarkers
+        name={province}
+        population={100}
+        covidData={covidData}
+      />
       <CaseToggle
         caseGradient={caseGradient}
         onTogglerClick={onTogglerClick}
-      >
-        Hello
-      </CaseToggle>
+      ></CaseToggle>
     </StyledContainer>
   );
 };

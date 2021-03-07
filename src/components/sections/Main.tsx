@@ -13,13 +13,20 @@ interface MainProps {
   // arr: string[];
 }
 
+export interface ICovidData {
+  activeCases: number;
+  culminativeCases: number;
+  culminativeDeaths: number;
+  culminativeRecovered: number;
+}
+
 export const Main: React.FC<MainProps> = ({}) => {
   const [province, setProvince] = useState<string>('ontario');
   const [date, setDate] = useState<string>('11-09-2000');
   const [numberList, changeNumbersList] = useState<number[]>([]);
   const [caseGradient, setCaseGradient] = useState<boolean>(false);
 
-  const [covidDate, setCovidDate] = useState({
+  const [covidData, setCovidData] = useState<ICovidData>({
     activeCases: 0,
     culminativeCases: 0,
     culminativeDeaths: 0,
@@ -49,13 +56,13 @@ export const Main: React.FC<MainProps> = ({}) => {
         `https://api.opencovid.ca/timeseries?loc=${provinceAbbreviation}&date=${date}`
       );
       const data = await response.json();
-      setCovidDate({
+      setCovidData({
         activeCases: data.active[0].active_cases,
         culminativeCases: data.active[0].cumulative_cases,
         culminativeDeaths: data.active[0].cumulative_deaths,
         culminativeRecovered: data.active[0].cumulative_recovered,
       });
-      console.log(covidDate);
+      console.log(covidData);
     }
   };
   let provinceAbbreviation = generateAbbrev(province); // generate abbreviations
@@ -69,26 +76,6 @@ export const Main: React.FC<MainProps> = ({}) => {
 
   useEffect(() => {
     changeNumbersList(getProvinceValues());
-
-    // if (selectedDateObject.getTime() < Date.now()) {
-    //   fetch(
-    //     `https://api.opencovid.ca/timeseries?loc=${provinceAbbreviation}&date=${date}`
-    //   )
-    //     .then((response) => response.json())
-    //     .then((data) => {
-    //       //console.log(data.active[0]);
-    //       activeCases = data.active[0].active_cases;
-    //       culminativeCases = data.active[0].cumulative_cases;
-    //       culminativeDeaths = data.active[0].cumulative_deaths;
-    //       culminativeRecovered = data.active[0].cumulative_recovered;
-    //     })
-    //     .catch((err) => console.log(err));
-
-    //   console.log('ACTIVE_CASES', activeCases);
-    //   console.log('CULMINATIVE_CASES', culminativeCases);
-    //   console.log(culminativeDeaths);
-    //   console.log(culminativeRecovered);
-    // }
   }, [date]);
 
   return (
@@ -101,6 +88,7 @@ export const Main: React.FC<MainProps> = ({}) => {
           numberList={numberList}
         />
         <InfoContainer
+          covidData={covidData}
           province={province}
           onTogglerClick={handleToggler}
           caseGradient={caseGradient}
