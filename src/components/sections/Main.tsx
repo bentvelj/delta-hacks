@@ -1,3 +1,4 @@
+import { Button } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ButtonEvent, ProvinceName } from '../../utils/types';
@@ -10,6 +11,7 @@ interface MainProps {}
 export const Main: React.FC<MainProps> = ({}) => {
   const [province, setProvince] = useState<string>('ontario');
   const [date, setDate] = useState<string>('11-09-2000');
+  const [caseGradient, setCaseGradient] = useState<boolean>(false);
 
   const handleClick = (event: ButtonEvent, geo: any) => {
     setProvince(geo.properties.gn_name);
@@ -20,11 +22,20 @@ export const Main: React.FC<MainProps> = ({}) => {
     setDate(date);
   };
 
+  const handleToggler = () => {
+    console.log(caseGradient);
+    setCaseGradient(!caseGradient);
+  };
+
   return (
     <>
       <StyledContainer>
         <Projection onHover={handleClick} province={province} />
-        <InfoContainer province={province} />
+        <InfoContainer
+          province={province}
+          onTogglerClick={handleToggler}
+          caseGradient={caseGradient}
+        />
       </StyledContainer>
 
       <SliderPanel onDateChange={handleDateChangeEvent}></SliderPanel>
