@@ -29,6 +29,7 @@ export const Main: React.FC<MainProps> = ({}) => {
   const [date, setDate] = useState<string>('11-09-2000');
   const [numberList, changeNumbersList] = useState<number[]>([]);
   const [caseGradient, setCaseGradient] = useState<boolean>(false);
+  const [sliderPercantage, changeSliderPercantage] = useState<number>(100);
   const [covidData, setCovidData] = useState<ICovidData>({
     activeCases: 0,
     dailyCases: 0,
@@ -51,7 +52,8 @@ export const Main: React.FC<MainProps> = ({}) => {
 
   // API STUFF ============================================================
 
-  const onSlide = async (date: string) => {
+  const onSlide = async (date: string, value: number) => {
+    changeSliderPercantage(value);
     setDate(date);
     let provinceAbbreviation = generateAbbrev(province); // generate abbreviations
 
@@ -110,7 +112,7 @@ export const Main: React.FC<MainProps> = ({}) => {
         />
       </StyledContainer>
 
-      <SliderPanel handleSlideChange={onSlide}></SliderPanel>
+      <SliderPanel handleSlideChange={onSlide} sliderPercantage={sliderPercantage}></SliderPanel>
     </>
   );
 };
