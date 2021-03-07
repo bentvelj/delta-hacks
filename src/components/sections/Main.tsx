@@ -14,14 +14,14 @@ interface MainProps {
 }
 
 export interface ICovidData {
-    activeCases: number,
-    dailyCases: number,
-    culminativeCases: number,
-    dailyDeaths: number,
-    culminativeDeaths: number,
-    dailyTested: number,
-    culminativeTested: number,
-    culminativeRecovered: number
+  activeCases: number;
+  dailyCases: number;
+  culminativeCases: number;
+  dailyDeaths: number;
+  culminativeDeaths: number;
+  dailyTested: number;
+  culminativeTested: number;
+  culminativeRecovered: number;
 }
 
 export const Main: React.FC<MainProps> = ({}) => {
@@ -38,7 +38,7 @@ export const Main: React.FC<MainProps> = ({}) => {
     culminativeDeaths: 0,
     dailyTested: 0,
     culminativeTested: 0,
-    culminativeRecovered: 0
+    culminativeRecovered: 0,
   });
 
   const handleClick = (event: ButtonEvent, geo: any) => {
@@ -83,12 +83,20 @@ export const Main: React.FC<MainProps> = ({}) => {
         culminativeTested: data.testing[0].cumulative_testing,
         culminativeRecovered: data.active[0].cumulative_recovered,
       });
+      // console.log('wefwe');
+      const responseCountry = await fetch(
+        `https://api.opencovid.ca/timeseries?loc=prov&date=${date}`
+      );
+      const dataCountry = await responseCountry.json();
+
+      changeNumbersList(getProvinceValues(dataCountry.cases));
+    } else {
     }
   };
 
-  useEffect(() => {
-    changeNumbersList(getProvinceValues());
-  }, [date]);
+  // useEffect(() => {
+  //   changeNumbersList(getProvinceValues());
+  // }, [date]);
 
   return (
     <>
@@ -129,11 +137,12 @@ const StyledContainer = styled.div`
   }
 `;
 
-function getProvinceValues(): number[] {
+function getProvinceValues(dataCountry: any): number[] {
   let arr: number[] = [];
-  for (let i = 0; i <= 12; i++) {
-    arr.push(Math.floor(Math.random() * 100));
+  // console.log(dataCountry);
+  for (let item of dataCountry) {
+    if (item.province !== 'Repariated') {
+    }
   }
-  // console.log(arr);
   return arr;
 }

@@ -13,10 +13,13 @@ import calculateDate from '../../utils/calculateDate';
 
 interface SliderPanelProps {
   onDateChange: (formattedSelectedDate: string) => void;
-  onSlideChangeTwo: () => Promise<void>
+  onSlideChangeTwo: () => Promise<void>;
 }
 
-export const SliderPanel: React.FC<SliderPanelProps> = ({ onDateChange, onSlideChangeTwo }) => {
+export const SliderPanel: React.FC<SliderPanelProps> = ({
+  onDateChange,
+  onSlideChangeTwo,
+}) => {
   const { colorMode } = useColorMode();
   const [sliderPercantage, changeSliderPercantage] = useState(100);
 
@@ -42,7 +45,10 @@ export const SliderPanel: React.FC<SliderPanelProps> = ({ onDateChange, onSlideC
           aria-label="slider-ex-2"
           colorScheme="teal"
           defaultValue={sliderPercantage}
-          onChangeEnd={(value) => {changeSliderPercantage(value); onSlideChangeTwo() }}
+          onChange={(value) => {
+            changeSliderPercantage(value);
+            onSlideChangeTwo();
+          }}
         >
           <SliderTrack>
             <SliderFilledTrack />
