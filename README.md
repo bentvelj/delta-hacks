@@ -16,10 +16,22 @@ Christopher Andrade
 [<img alt="CHRIS_LINK" align="left" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/linkedin.svg" />][CHRIS_LINK]
 [<img align="left" width="25px" src="https://img.icons8.com/fluent/48/000000/github.png"/>][CHRIS_GIT]
 
+Bassel Rezkalla
+[<img alt="CHRIS_LINK" align="left" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/linkedin.svg" />][CHRIS_LINK]
+[<img align="left" width="25px" src="https://img.icons8.com/fluent/48/000000/github.png"/>][CHRIS_GIT]
+
+Jared Bentvelsen
+[<img alt="BASSEL_LINK" align="left" width="22px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/linkedin.svg" />][BASSEL_LINK]
+[<img align="left" width="25px" src="https://img.icons8.com/fluent/48/000000/github.png"/>][BASSEL_GIT]
+
 [DIMITRI_LINK]:https://www.linkedin.com/in/dimitritsampiras/
 [MATT_LINK]:https://www.linkedin.com/in/matthew-mccracken/
 [CHRIS_LINK]:https://www.linkedin.com/in/chrisfandrade16/
+[BASSEL_LINK]:https://www.linkedin.com/in/bassel-rezkalla/
+[JARED_LINK]:https://www.linkedin.com/in/jaredbentvelsen/
 
 [DIMITRI_GIT]:https://github.com/dimitritsampiras/
 [MATT_GIT]:https://github.com/MatthewWMcC
 [CHRIS_GIT]:https://github.com/chrisfandrade16
+[BASSEL_GIT]:https://github.com/BasselR
+[JARED_GIT]:https://github.com/bentvelj
