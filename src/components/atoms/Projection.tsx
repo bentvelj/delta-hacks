@@ -64,7 +64,7 @@ const StyledGeographies = styled(Geographies)``;
 const StyledProvince = styled(Geography)`
   :hover {
     cursor: pointer;
-    fill: ${theme.colors.gray[700]};
+    fill: ${(props) => props.geography.properties.gn_name === props.province ? theme.colors.gray[700]};
   }
 
   :focus,

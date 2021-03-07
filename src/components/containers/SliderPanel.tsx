@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import {
   ColorMode,
@@ -26,8 +26,15 @@ export const SliderPanel: React.FC<SliderPanelProps> = ({ onDateChange }) => {
     selectedDate.getMonth() +
     '-' +
     selectedDate.getFullYear();
+    
+  console.log('formateed date', formattedSelectedDate);
+  console.log('selected date', selectedDate.toString());
 
-  onDateChange(formattedSelectedDate);
+  useEffect(() => {
+    onDateChange(formattedSelectedDate);
+  });
+
+  // onDateChange(formattedSelectedDate);
   /* fetch(`https://api.opencovid.ca/timeseries?stat=cases&loc=prov&date=01-09-2020`)
             .then(response => response.json())
             .then(function (data) {
