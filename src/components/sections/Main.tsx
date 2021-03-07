@@ -3,6 +3,7 @@ import { randomInt } from 'd3-random';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { getAllJSDocTags } from 'typescript';
+import { generateAbbrev } from '../../utils/generateAbbrev';
 import { ButtonEvent, ProvinceName } from '../../utils/types';
 import { Projection } from '../atoms/Projection';
 import { InfoContainer } from '../containers/InfoContainer';
@@ -17,15 +18,13 @@ export const Main: React.FC<MainProps> = ({}) => {
   const [date, setDate] = useState<string>('11-09-2000');
   const [numberList, changeNumbersList] = useState<number[]>([]);
   const [caseGradient, setCaseGradient] = useState<boolean>(false);
-  // const [numbersList, changeNumbersList] = useState<number[]>([]);
 
-  // const getData = () => {
-  //   var arr = [];
-  //   for (var i = 0; i >= 12; i++) {
-  //     arr.push(Math.floor(Math.random() * 100));
-  //   }
-  //   changeNumbersList(arr);
-  // };
+  const [covidDate, setCovidDate] = useState({
+    activeCases: 0,
+    culminativeCases: 0,
+    culminativeDeaths: 0,
+    culminativeRecovered: 0,
+  });
 
   const handleClick = (event: ButtonEvent, geo: any) => {
     console.log(geo.properties.gn_name);
@@ -37,84 +36,39 @@ export const Main: React.FC<MainProps> = ({}) => {
     setDate(date);
   };
 
-  useEffect(() => {
-    changeNumbersList(getProvinceValues());
-  }, [date]);
   const handleToggler = () => {
     console.log(caseGradient);
     setCaseGradient(!caseGradient);
   };
 
-  let provinceAbbreviation;
+  // API STUFF ============================================================
 
-  switch(province) {
-    case 'Ontario':
-      provinceAbbreviation = 'ON';
-      break;
-    case 'Manitoba':
-      provinceAbbreviation = 'MB';
-      break;
-    case 'Saskatchewan':
-      provinceAbbreviation = 'SK';
-      break;
-    case 'Alberta':
-      provinceAbbreviation = 'AB';
-      break;
-    case 'British Columbia':
-      provinceAbbreviation = 'BC';
-      break;
-    case 'Yukon':
-      provinceAbbreviation = 'YT';
-      break;
-    case 'Northwest Territories':
-      provinceAbbreviation = 'NT';
-      break;
-    case 'Nunavut':
-      provinceAbbreviation = 'NU';
-      break;
-    case 'Newfoundland and Labrador':
-      provinceAbbreviation = 'NL';
-      break;
-    case 'Prince Edward Island':
-      provinceAbbreviation = 'PE';
-      break;
-    case 'Nova Scotia':
-      provinceAbbreviation = 'NS';
-      break;
-    case 'New Brunswick':
-      provinceAbbreviation = 'NB';
-      break;
-    case 'Quebec':
-      provinceAbbreviation = 'QC';
-      break;
-    default:
-      provinceAbbreviation = "ON";
-  }
+  const onSlide = async () => {
+    const response = await fetch(
+      `https://api.opencovid.ca/timeseries?loc=${provinceAbbreviation}&date=${date}`
+    );
+    const data = await response.json();
+    setCovidDate({
+      activeCases: data.active[0].active_cases,
+      culminativeCases: data.active[0].cumulative_cases,
+      culminativeDeaths: data.active[0].cumulative_deaths,
+      culminativeRecovered: data.active[0].cumulative_recovered,
+    });
+    console.log(covidDate);
+  };
 
-  let activeCases;
-  let culminativeCases;
-  let culminativeDeaths;
-  let culminativeRecovered;
+  let provinceAbbreviation = generateAbbrev(province); // generate abbreviations
 
-  console.log(`https://api.opencovid.ca/timeseries?loc=${provinceAbbreviation}&date=${date}`)
+  let dateArray = date.split('-');
+  let selectedDateObject = new Date(
+    parseInt(dateArray[2]),
+    parseInt(dateArray[1]) - 1,
+    parseInt(dateArray[0])
+  );
 
-  let dateArray = date.split("-");
-  let selectedDateObject = new Date(parseInt(dateArray[2]), parseInt(dateArray[1]) - 1, parseInt(dateArray[0]));  
-
-  if(selectedDateObject.getTime() < Date.now()) {
-    fetch(`https://api.opencovid.ca/timeseries?loc=${provinceAbbreviation}&date=${date}`).then(response => response.json()).then(function (data) {
-      //console.log(data.active[0]);
-      activeCases = data.active[0].active_cases;
-      culminativeCases = data.active[0].cumulative_cases;
-      culminativeDeaths = data.active[0].cumulative_deaths;
-      culminativeRecovered = data.active[0].cumulative_recovered;   
-    }).catch(err => console.log(err));
-
-    console.log(activeCases);
-    console.log(culminativeCases);
-    console.log(culminativeDeaths);
-    console.log(culminativeRecovered);
-  }
+  useEffect(() => {
+    changeNumbersList(getProvinceValues());
+  }, [date]);
 
   return (
     <>
@@ -132,11 +86,17 @@ export const Main: React.FC<MainProps> = ({}) => {
         />
       </StyledContainer>
 
-      <SliderPanel onDateChange={handleDateChangeEvent}></SliderPanel>
+      <SliderPanel
+        onDateChange={handleDateChangeEvent}
+        onSlideChangeTwo={onSlide}
+      ></SliderPanel>
     </>
   );
 };
 
+/**
+ * styled -------------------------------------------------------
+ */
 const StyledContainer = styled.div`
   display: flex;
   justify-content: center;
