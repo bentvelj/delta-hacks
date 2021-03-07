@@ -22,15 +22,15 @@ export const SliderPanel: React.FC<SliderPanelProps> = ({}) => {
   const diffOfTimeFromFirstToPresent = Math.abs(presentDate.getTime() - startDate.getTime());
   const diffOfDaysFromFirstToPresent = Math.ceil(diffOfTimeFromFirstToPresent / (1000 * 60 * 60 * 24)); 
 
-  const differenceOfDaysToSelected = sliderPercantage * diffOfDaysFromFirstToPresent;
-  const differenceOfTimeToSelected = differenceOfDaysToSelected * (1000 * 60 * 60 * 24);
+  const diffOfDaysFromFirstToSelected = (sliderPercantage / 100) * diffOfDaysFromFirstToPresent;
+  const diffOfTimeFromFirstToSelected = diffOfDaysFromFirstToSelected * (1000 * 60 * 60 * 24);
 
-  const selectedDate = new Date(startDate.getTime() + differenceOfTimeToSelected);
+  const selectedDate = new Date(startDate.getTime() + diffOfTimeFromFirstToSelected);
 
   return (
     <StyledContainer>
       <StyledInnerContainer colorMode={colorMode}>
-        <StyledInfoWrapper>Date Selected = {selectedDate.toDateString()}</StyledInfoWrapper>
+        <StyledInfoWrapper>Date Selected: {selectedDate.toDateString()}</StyledInfoWrapper>
         <Slider
           aria-label="slider-ex-2"
           colorScheme="teal"
