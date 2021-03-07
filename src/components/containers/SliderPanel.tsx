@@ -14,18 +14,28 @@ interface SliderPanelProps {}
 
 export const SliderPanel: React.FC<SliderPanelProps> = ({}) => {
   const { colorMode } = useColorMode();
-  const [date, changeDate] = useState();
-  const [value, setValue] = useState(30);
+  const [ sliderPercantage, changeSliderPercantage ] = useState(100);
+
+  const startDate = new Date("1/25/2020")
+  const presentDate = new Date();
+
+  const diffOfTimeFromFirstToPresent = Math.abs(presentDate.getTime() - startDate.getTime());
+  const diffOfDaysFromFirstToPresent = Math.ceil(diffOfTimeFromFirstToPresent / (1000 * 60 * 60 * 24)); 
+
+  const differenceOfDaysToSelected = sliderPercantage * diffOfDaysFromFirstToPresent;
+  const differenceOfTimeToSelected = differenceOfDaysToSelected * (1000 * 60 * 60 * 24);
+
+  const selectedDate = new Date(startDate.getTime() + differenceOfTimeToSelected);
 
   return (
     <StyledContainer>
       <StyledInnerContainer colorMode={colorMode}>
-        <StyledInfoWrapper>Value = {value}</StyledInfoWrapper>
+        <StyledInfoWrapper>Date Selected = {selectedDate.toDateString()}</StyledInfoWrapper>
         <Slider
           aria-label="slider-ex-2"
           colorScheme="teal"
-          defaultValue={30}
-          onChange={(val) => setValue(val)}
+          defaultValue={sliderPercantage}
+          onChange={(value) => changeSliderPercantage(value)}
         >
           <SliderTrack>
             <SliderFilledTrack />
