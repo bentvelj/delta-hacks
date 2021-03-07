@@ -4,7 +4,7 @@ import theme from '../../theme';
 import { Text } from '@chakra-ui/react';
 
 
-export const Legend: React.FC = ({}) => {
+export const Legend: React.FC = () => {
   return (
     <StyledOuterBox>
       <StyledInnerBox>
