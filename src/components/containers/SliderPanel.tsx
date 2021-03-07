@@ -61,11 +61,13 @@ const StyledInnerContainer = styled.div<{ colorMode: ColorMode }>`
   display: flex;
   flex-direction: column;
   width: 75%;
+  max-width: 1400px;
   height: 100%;
   background-color: ${({ colorMode }) =>
     colorMode === 'light' ? theme.colors.gray[100] : theme.colors.gray[700]};
   border-radius: 10px;
   padding: 20px;
+  box-shadow: ${theme.shadows.lg}
 `;
 
 const StyledInfoWrapper = styled.div``;

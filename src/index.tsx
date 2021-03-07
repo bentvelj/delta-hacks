@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import { Projection } from './components/atoms/Projection';
 import { Header } from './components/sections/Header';
 import { Main } from './components/sections/Main';
-import { SliderPanel } from './components/containers/SliderPanel';
 import theme from './theme';
 
 ReactDOM.render(
