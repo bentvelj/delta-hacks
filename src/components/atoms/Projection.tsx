@@ -81,7 +81,7 @@ const StyledProvince = styled(Geography)<{
 }>`
   fill: ${(props) => {
     if (props.caseGradient) {
-      return theme.colors.red[300];
+      return theme.colors.red[500];
     }
   }};
   :hover {
@@ -102,6 +102,10 @@ const StyledProvince = styled(Geography)<{
   }
 
   :active {
-    fill: ${theme.colors.teal[600]};
+    fill: ${(props) => {
+      if (!props.caseGradient) {
+        return theme.colors.teal[600]
+      }
+    }};
   }
 `;
