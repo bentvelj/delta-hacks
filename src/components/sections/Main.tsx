@@ -17,8 +17,8 @@ export const Main: React.FC<MainProps> = ({}) => {
   return (
     <>
       <StyledContainer>
-        <InfoContainer province={province} />
         <Projection onHover={handleHoverEvent} />
+        <InfoContainer province={province} />
       </StyledContainer>
 
       <SliderPanel></SliderPanel>
@@ -30,4 +30,9 @@ const StyledContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
+
+  @media (max-width: 1746px) {
+    flex-direction: column;
+  }
 `;

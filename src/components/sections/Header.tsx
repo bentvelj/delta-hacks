@@ -27,7 +27,7 @@ const FlexContainer = styled.div`
 
 const StyledContainer = styled(FlexContainer)`
   width: 100%;
-  min-height: 200px;
+  min-height: 150px;
 `;
 
 const StyledInnerContainer = styled(FlexContainer)`

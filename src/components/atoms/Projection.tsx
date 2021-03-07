@@ -48,7 +48,10 @@ const StyledProjectionContainer = styled.div`
   height: 600px;
   width: 900px;
   margin: 0;
-  margin-left: -40px;
+
+  @media (max-width: 1746px) {
+    margin: -70px 0 -20px;
+  }
 `;
 
 const StyledComposableMap = styled(ComposableMap)`
