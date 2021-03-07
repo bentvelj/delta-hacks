@@ -28,9 +28,9 @@ export const SliderPanel: React.FC<SliderPanelProps> = ({ handleSlideChange }) =
     '-' +
     selectedDate.getFullYear();
 
-  const onSlideChange = (value: number) => {
+  const onSlideChange = async (value: number) => {
     changeSliderPercantage(value)
-    handleSlideChange(formattedSelectedDate);
+    await handleSlideChange(formattedSelectedDate);
   }
 
   // useEffect(() => {
@@ -47,7 +47,7 @@ export const SliderPanel: React.FC<SliderPanelProps> = ({ handleSlideChange }) =
           aria-label="slider-ex-2"
           colorScheme="teal"
           defaultValue={sliderPercantage}
-          onChange={(value) => onSlideChange(value)}
+          onChange={async (value) => await onSlideChange(value)}
         >
           <SliderTrack>
             <SliderFilledTrack />
