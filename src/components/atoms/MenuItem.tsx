@@ -29,10 +29,12 @@ const StyledMenuItem = styled(Link)`
 /**
  *
  */
-const urlSwticher = (type: 'github' | 'docs') => {
+const urlSwticher = (type: 'github' | 'api') => {
   switch (type) {
     case 'github':
       return 'https://github.com/dimitritsampiras/delta-hacks';
+    case 'api':
+      return 'https://opencovid.ca/api/';
     default:
       return 'https://github.com/dimitritsampiras/delta-hacks';
   }
