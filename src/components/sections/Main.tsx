@@ -8,10 +8,16 @@ import { SliderPanel } from '../containers/SliderPanel';
 interface MainProps {}
 
 export const Main: React.FC<MainProps> = ({}) => {
-  const [province, setProvince] = useState<ProvinceName>('Ontario');
+  const [province, setProvince] = useState<string>('ontario');
+  const [date, setDate] = useState<string>('11-09-2000');
 
   const handleClick = (event: ButtonEvent, geo: any) => {
     setProvince(geo.properties.gn_name);
+  };
+
+  const handleDateChangeEvent = (date: string) => {
+    console.log(date);
+    setDate(date);
   };
 
   return (
@@ -21,7 +27,7 @@ export const Main: React.FC<MainProps> = ({}) => {
         <InfoContainer province={province} />
       </StyledContainer>
 
-      <SliderPanel></SliderPanel>
+      <SliderPanel onDateChange={handleDateChangeEvent}></SliderPanel>
     </>
   );
 };

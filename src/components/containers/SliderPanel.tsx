@@ -11,15 +11,23 @@ import {
 } from '@chakra-ui/react';
 import calculateDate from '../../utils/calculateDate';
 
-interface SliderPanelProps {}
+interface SliderPanelProps {
+  onDateChange: (formattedSelectedDate: string) => void;
+}
 
-export const SliderPanel: React.FC<SliderPanelProps> = ({}) => {
+export const SliderPanel: React.FC<SliderPanelProps> = ({ onDateChange }) => {
   const { colorMode } = useColorMode();
-  const [ sliderPercantage, changeSliderPercantage ] = useState(100);
+  const [sliderPercantage, changeSliderPercantage] = useState(100);
 
   const selectedDate = calculateDate(sliderPercantage);
-  const formattedSelectedDate = selectedDate.getDay() + '-' + selectedDate.getMonth() + '-' + selectedDate.getFullYear();
+  const formattedSelectedDate =
+    selectedDate.getDay() +
+    '-' +
+    selectedDate.getMonth() +
+    '-' +
+    selectedDate.getFullYear();
 
+  onDateChange(formattedSelectedDate);
   /* fetch(`https://api.opencovid.ca/timeseries?stat=cases&loc=prov&date=01-09-2020`)
             .then(response => response.json())
             .then(function (data) {
@@ -35,7 +43,9 @@ export const SliderPanel: React.FC<SliderPanelProps> = ({}) => {
   return (
     <StyledContainer>
       <StyledInnerContainer colorMode={colorMode}>
-        <StyledInfoWrapper>Date Selected: {selectedDate.toDateString()}</StyledInfoWrapper>
+        <StyledInfoWrapper>
+          Date Selected: {selectedDate.toDateString()}
+        </StyledInfoWrapper>
         <Slider
           aria-label="slider-ex-2"
           colorScheme="teal"
@@ -71,7 +81,7 @@ const StyledInnerContainer = styled.div<{ colorMode: ColorMode }>`
     colorMode === 'light' ? theme.colors.gray[100] : theme.colors.gray[700]};
   border-radius: 10px;
   padding: 20px;
-  box-shadow: ${theme.shadows.lg}
+  box-shadow: ${theme.shadows.lg};
 `;
 
 const StyledInfoWrapper = styled.div``;
