@@ -232,95 +232,106 @@ export const Main: React.FC<MainProps> = () => {
           'Access-Control-Allow-Origin': '*',
           'Content-Type': 'multipart/form-data',
         },
-        mode: 'cors',
+        mode: 'no-cors',
       };
       const dataFetch = await fetch(
         `https://mighty-depths-59110.herokuapp.com/simulate?pop=${population}&i0=${data.active[0].active_cases}&b=1.1&d_r=0.1&vax_offset=${daysTil}&days=${daysTil}`,
         info
       );
-      const pythonAPIData = await dataFetch.json();
+      try {
+        const pythonAPIData = await dataFetch.json();
+        let activeCases,
+          dailyCases,
+          dailyTested,
+          dailyDeaths,
+          culminativeCases,
+          culminativeTested,
+          culminativeDeaths,
+          culminativeRecovered;
 
-      let activeCases,
-        dailyCases,
-        dailyTested,
-        dailyDeaths,
-        culminativeCases,
-        culminativeTested,
-        culminativeDeaths,
-        culminativeRecovered;
-
-      try {
-        activeCases =
-          pythonAPIData.dataVectors[1].data[
-            pythonAPIData.dataVectors[1].data.length - 1
-          ];
+        try {
+          activeCases =
+            pythonAPIData.dataVectors[1].data[
+              pythonAPIData.dataVectors[1].data.length - 1
+            ];
+        } catch (error) {
+          activeCases = 0;
+        }
+        try {
+          dailyCases =
+            pythonAPIData.dataVectors[5].data[
+              pythonAPIData.dataVectors[5].data.length - 1
+            ];
+        } catch (error) {
+          dailyCases = 0;
+        }
+        try {
+          dailyTested = data.testing[0].testing;
+        } catch (error) {
+          dailyTested = 0;
+        }
+        try {
+          dailyDeaths = data.mortality[0].deaths;
+        } catch (error) {
+          dailyDeaths = 0;
+        }
+        try {
+          culminativeCases =
+            pythonAPIData.dataVectors[4].data[
+              pythonAPIData.dataVectors[4].data.length - 1
+            ] +
+            pythonAPIData.dataVectors[2].data[
+              pythonAPIData.dataVectors[2].data.length - 1
+            ] +
+            pythonAPIData.dataVectors[1].data[
+              pythonAPIData.dataVectors[1].data.length - 1
+            ];
+        } catch (error) {
+          culminativeCases = 0;
+        }
+        try {
+          culminativeTested = data.testing[0].cumulative_testing;
+        } catch (error) {
+          culminativeTested = 0;
+        }
+        try {
+          culminativeDeaths =
+            pythonAPIData.dataVectors[4].data[
+              pythonAPIData.dataVectors[4].data.length - 1
+            ];
+        } catch (error) {
+          culminativeDeaths = 0;
+        }
+        try {
+          culminativeRecovered =
+            pythonAPIData.dataVectors[2].data[
+              pythonAPIData.dataVectors[2].data.length - 1
+            ];
+        } catch (error) {
+          culminativeRecovered = 0;
+        }
+        setCovidData({
+          activeCases: activeCases,
+          dailyCases: dailyCases,
+          culminativeCases: culminativeCases,
+          dailyDeaths: dailyDeaths,
+          culminativeDeaths: culminativeDeaths,
+          dailyTested: dailyTested,
+          culminativeTested: culminativeTested,
+          culminativeRecovered: culminativeRecovered,
+        });
       } catch (error) {
-        activeCases = 0;
+        setCovidData({
+          activeCases: 0,
+          dailyCases: 0,
+          culminativeCases: 0,
+          dailyDeaths: 0,
+          culminativeDeaths: 0,
+          dailyTested: 0,
+          culminativeTested: 0,
+          culminativeRecovered: 0,
+        });
       }
-      try {
-        dailyCases =
-          pythonAPIData.dataVectors[5].data[
-            pythonAPIData.dataVectors[5].data.length - 1
-          ];
-      } catch (error) {
-        dailyCases = 0;
-      }
-      try {
-        dailyTested = data.testing[0].testing;
-      } catch (error) {
-        dailyTested = 0;
-      }
-      try {
-        dailyDeaths = data.mortality[0].deaths;
-      } catch (error) {
-        dailyDeaths = 0;
-      }
-      try {
-        culminativeCases =
-          pythonAPIData.dataVectors[4].data[
-            pythonAPIData.dataVectors[4].data.length - 1
-          ] +
-          pythonAPIData.dataVectors[2].data[
-            pythonAPIData.dataVectors[2].data.length - 1
-          ] +
-          pythonAPIData.dataVectors[1].data[
-            pythonAPIData.dataVectors[1].data.length - 1
-          ];
-      } catch (error) {
-        culminativeCases = 0;
-      }
-      try {
-        culminativeTested = data.testing[0].cumulative_testing;
-      } catch (error) {
-        culminativeTested = 0;
-      }
-      try {
-        culminativeDeaths =
-          pythonAPIData.dataVectors[4].data[
-            pythonAPIData.dataVectors[4].data.length - 1
-          ];
-      } catch (error) {
-        culminativeDeaths = 0;
-      }
-      try {
-        culminativeRecovered =
-          pythonAPIData.dataVectors[2].data[
-            pythonAPIData.dataVectors[2].data.length - 1
-          ];
-      } catch (error) {
-        culminativeRecovered = 0;
-      }
-
-      setCovidData({
-        activeCases: activeCases,
-        dailyCases: dailyCases,
-        culminativeCases: culminativeCases,
-        dailyDeaths: dailyDeaths,
-        culminativeDeaths: culminativeDeaths,
-        dailyTested: dailyTested,
-        culminativeTested: culminativeTested,
-        culminativeRecovered: culminativeRecovered,
-      });
     }
   };
 
