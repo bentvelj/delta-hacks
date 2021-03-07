@@ -227,8 +227,16 @@ export const Main: React.FC<MainProps> = () => {
         (selectedDateObject.getTime() - dateNow.getTime()) /
           (1000 * 60 * 60 * 24)
       );
+      let info: RequestInit = {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'multipart/form-data',
+        },
+        mode: 'cors',
+      };
       const dataFetch = await fetch(
-        `https://mighty-depths-59110.herokuapp.com/simulate?pop=${population}&i0=${data.active[0].active_cases}&b=1.1&d_r=0.1&vax_offset=${daysTil}&days=${daysTil}`
+        `https://mighty-depths-59110.herokuapp.com/simulate?pop=${population}&i0=${data.active[0].active_cases}&b=1.1&d_r=0.1&vax_offset=${daysTil}&days=${daysTil}`,
+        info
       );
       const pythonAPIData = await dataFetch.json();
 
