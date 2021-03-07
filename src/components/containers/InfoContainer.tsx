@@ -17,7 +17,7 @@ export const InfoContainer: React.FC<InfoContainerProps> = ({province}) => {
 
 const StyledContainer = styled.div<{ colorMode: ColorMode }>`
   width: 450px;
-  height: 650px;
+  height: 400px;
   margin-top: 50px;
   border-radius: 10px;
   box-shadow: ${theme.shadows.lg};
