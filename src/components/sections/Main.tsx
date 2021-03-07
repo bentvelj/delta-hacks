@@ -1,5 +1,5 @@
 import { randomInt } from 'd3-random';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { getAllJSDocTags } from 'typescript';
 import { ButtonEvent, ProvinceName } from '../../utils/types';
@@ -14,7 +14,7 @@ interface MainProps {
 export const Main: React.FC<MainProps> = ({}) => {
   const [province, setProvince] = useState<string>('ontario');
   const [date, setDate] = useState<string>('11-09-2000');
-  // const [numbersList, changeNumbersList] = useState<number[]>([]);
+  const [numberList, changeNumbersList] = useState<number[]>([]);
 
   const handleClick = (event: ButtonEvent, geo: any) => {
     setProvince(geo.properties.gn_name);
@@ -23,21 +23,20 @@ export const Main: React.FC<MainProps> = ({}) => {
   const handleDateChangeEvent = (date: string) => {
     console.log(date);
     setDate(date);
-    // getData();
   };
 
-  // const getData = () => {
-  //   var arr = [];
-  //   for (var i = 0; i >= 12; i++) {
-  //     arr.push(Math.floor(Math.random() * 100));
-  //   }
-  //   changeNumbersList(arr);
-  // };
+  useEffect(() => {
+    changeNumbersList(getProvinceValues());
+  }, [date]);
 
   return (
     <>
       <StyledContainer>
-        <Projection onHover={handleClick} province={province} />
+        <Projection
+          onHover={handleClick}
+          province={province}
+          numberList={numberList}
+        />
         <InfoContainer province={province} />
       </StyledContainer>
 
@@ -56,3 +55,12 @@ const StyledContainer = styled.div`
     flex-direction: column;
   }
 `;
+
+function getProvinceValues(): number[] {
+  let arr: number[] = [];
+  for (let i = 0; i <= 12; i++) {
+    arr.push(Math.floor(Math.random() * 100));
+  }
+  // console.log(arr);
+  return arr;
+}
