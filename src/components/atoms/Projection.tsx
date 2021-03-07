@@ -36,7 +36,6 @@ export const Projection: React.FC<ProjectionProps> = ({
                 <StyledProvince
                   numberList={numberList}
                   caseGradient={caseGradient}
-                  numberList={numberList}
                   province={province}
                   key={i}
                   geography={geo}
