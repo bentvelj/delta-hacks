@@ -26,6 +26,8 @@ export const SliderPanel: React.FC<SliderPanelProps> = ({}) => {
   const diffOfTimeFromFirstToSelected = diffOfDaysFromFirstToSelected * (1000 * 60 * 60 * 24);
 
   const selectedDate = new Date(startDate.getTime() + diffOfTimeFromFirstToSelected);
+  
+  const formattedSelectedDate = selectedDate.getDay() + '-' + selectedDate.getMonth() + '-' + selectedDate.getFullYear;
 
   return (
     <StyledContainer>
