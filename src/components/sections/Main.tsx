@@ -28,9 +28,13 @@ export const Main: React.FC<MainProps> = ({}) => {
 
   const [covidData, setCovidData] = useState<ICovidData>({
     activeCases: 0,
+    dailyCases: 0,
     culminativeCases: 0,
+    dailyDeaths: 0,
     culminativeDeaths: 0,
-    culminativeRecovered: 0,
+    dailyTested: 0,
+    culminativeTested: 0,
+    culminativeRecovered: 0
   });
 
   const handleClick = (event: ButtonEvent, geo: any) => {
@@ -58,10 +62,13 @@ export const Main: React.FC<MainProps> = ({}) => {
       const data = await response.json();
       setCovidData({
         activeCases: data.active[0].active_cases,
+        dailyCases: data.cases[0].cases,
         culminativeCases: data.active[0].cumulative_cases,
+        dailyDeaths: data.mortality[0].deaths,
         culminativeDeaths: data.active[0].cumulative_deaths,
+        dailyTested: data.testing[0].testing,
+        culminativeTested: data.testing[0].cumulative_testing,
         culminativeRecovered: data.active[0].cumulative_recovered,
-      });
       console.log(covidData);
     }
   };
