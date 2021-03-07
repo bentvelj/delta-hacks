@@ -3,9 +3,8 @@ import styled from 'styled-components';
 import theme from '../../theme';
 import { Text } from '@chakra-ui/react';
 
-interface LegendProps {}
 
-export const Legend: React.FC<LegendProps> = ({}) => {
+export const Legend: React.FC = ({}) => {
   return (
     <StyledOuterBox>
       <StyledInnerBox>
