@@ -18,6 +18,8 @@ export interface ICovidData {
   culminativeCases: number;
   culminativeDeaths: number;
   culminativeRecovered: number;
+  dailyCases: number;
+  dailyDeaths: number;
 }
 
 export const Main: React.FC<MainProps> = ({}) => {
@@ -34,7 +36,7 @@ export const Main: React.FC<MainProps> = ({}) => {
     culminativeDeaths: 0,
     dailyTested: 0,
     culminativeTested: 0,
-    culminativeRecovered: 0
+    culminativeRecovered: 0,
   });
 
   const handleClick = (event: ButtonEvent, geo: any) => {
@@ -69,9 +71,11 @@ export const Main: React.FC<MainProps> = ({}) => {
         dailyTested: data.testing[0].testing,
         culminativeTested: data.testing[0].cumulative_testing,
         culminativeRecovered: data.active[0].cumulative_recovered,
+      });
       console.log(covidData);
     }
   };
+
   let provinceAbbreviation = generateAbbrev(province); // generate abbreviations
 
   let dateArray = date.split('-');
