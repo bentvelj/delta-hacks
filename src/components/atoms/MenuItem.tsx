@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import theme from '../../theme';
 
 interface MenuItemProps {
-  type: 'github' | 'docs';
+  type: 'github' | 'API';
 }
 
 export const MenuItem: React.FC<MenuItemProps> = ({ type }) => {
@@ -29,10 +29,12 @@ const StyledMenuItem = styled(Link)`
 /**
  *
  */
-const urlSwticher = (type: 'github' | 'docs') => {
+const urlSwticher = (type: 'github' | 'API') => {
   switch (type) {
     case 'github':
       return 'https://github.com/dimitritsampiras/delta-hacks';
+    case 'API':
+      return 'https://opencovid.ca/api/';
     default:
       return 'https://github.com/dimitritsampiras/delta-hacks';
   }
