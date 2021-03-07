@@ -37,7 +37,21 @@ export const Main: React.FC<MainProps> = () => {
     culminativeRecovered: 0,
   });
 
-  const populaitons: number[] = [4371000, 5071000, 776827, 521542, 38780, 971395, 44826, 14570000, 156947, 8485000, 1174000, 35874, 1369000];
+  const populaitons: number[] = [
+    4371000,
+    5071000,
+    776827,
+    521542,
+    38780,
+    971395,
+    44826,
+    14570000,
+    156947,
+    8485000,
+    1174000,
+    35874,
+    1369000,
+  ];
   let population;
 
   console.log(province);
@@ -123,56 +137,63 @@ export const Main: React.FC<MainProps> = () => {
       parseInt(dateArray[0])
     );
 
-    if (selectedDateObject.getTime() < Date.now() - (1000 * 60 * 60 * 24)) {
+    if (selectedDateObject.getTime() < Date.now() - 1000 * 60 * 60 * 24) {
       const response = await fetch(
         `https://api.opencovid.ca/timeseries?loc=${provinceAbbreviation}&date=${date}`
       );
 
       const data = await response.json();
 
-      let activeCases, dailyCases, dailyTested, dailyDeaths, culminativeCases, culminativeTested, culminativeDeaths, culminativeRecovered;
+      let activeCases,
+        dailyCases,
+        dailyTested,
+        dailyDeaths,
+        culminativeCases,
+        culminativeTested,
+        culminativeDeaths,
+        culminativeRecovered;
 
-      try{
-        activeCases =  data.active[0].active_cases;
-      } catch(error) {
+      try {
+        activeCases = data.active[0].active_cases;
+      } catch (error) {
         activeCases = 0;
       }
-      try{
-        dailyCases =  data.cases[0].cases;
-      } catch(error) {
+      try {
+        dailyCases = data.cases[0].cases;
+      } catch (error) {
         dailyCases = 0;
       }
-      try{
-        dailyTested =  data.testing[0].testing;
-      } catch(error) {
+      try {
+        dailyTested = data.testing[0].testing;
+      } catch (error) {
         dailyTested = 0;
       }
-      try{
-        dailyDeaths =  data.mortality[0].deaths;
-      } catch(error) {
+      try {
+        dailyDeaths = data.mortality[0].deaths;
+      } catch (error) {
         dailyDeaths = 0;
       }
-      try{
-        culminativeCases =  data.active[0].cumulative_cases;
-      } catch(error) {
+      try {
+        culminativeCases = data.active[0].cumulative_cases;
+      } catch (error) {
         culminativeCases = 0;
       }
-      try{
-        culminativeTested =  data.testing[0].cumulative_testing;
-      } catch(error) {
+      try {
+        culminativeTested = data.testing[0].cumulative_testing;
+      } catch (error) {
         culminativeTested = 0;
       }
-      try{
-        culminativeDeaths =  data.active[0].cumulative_deaths;
-      } catch(error) {
+      try {
+        culminativeDeaths = data.active[0].cumulative_deaths;
+      } catch (error) {
         culminativeDeaths = 0;
       }
-      try{
-        culminativeRecovered =  data.active[0].cumulative_recovered;
-      } catch(error) {
+      try {
+        culminativeRecovered = data.active[0].cumulative_recovered;
+      } catch (error) {
         culminativeRecovered = 0;
       }
-      
+
       setCovidData({
         activeCases: activeCases,
         dailyCases: dailyCases,
@@ -183,8 +204,7 @@ export const Main: React.FC<MainProps> = () => {
         culminativeTested: culminativeTested,
         culminativeRecovered: culminativeRecovered,
       });
-      
-      
+
       const responseCountry = await fetch(
         `https://api.opencovid.ca/timeseries?loc=prov&date=${date}`
       );
@@ -233,87 +253,96 @@ const StyledContainer = styled.div`
 
 function getProvinceValues(dataCountry: any): number[] {
   let arr: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  // console.log(dataCountry);
   for (let item of dataCountry) {
-    let pop;
-    let cases = item.cumulative_cases;
+    // console.log(item);
+    let pop = 0;
+    let cases = item.cases;
     let location = 0;
+    if (item.province !== 'Repatriated') {
+      switch (item.province) {
+        case 'Alberta': {
+          pop = 4371000;
+          location = 2;
+          break;
+        }
+        case 'BC': {
+          pop = 5071000;
+          location = 3;
+          break;
+        }
 
-    switch (item.province) {
-      case 'Alberta': {
-        pop = 4371000;
-        location = 2;
-        break;
+        case 'New Brunswick': {
+          pop = 776827;
+          location = 9;
+          break;
+        }
+        case 'NL': {
+          pop = 521542;
+          location = 11;
+          break;
+        }
+        case 'Nunavut': {
+          pop = 38780;
+          location = 4;
+          break;
+        }
+        case 'Nova Scotia': {
+          pop = 971395;
+          location = 10;
+          break;
+        }
+        case 'NWT': {
+          pop = 44826;
+          location = 5;
+          break;
+        }
+        case 'Ontario': {
+          pop = 14570000;
+          location = 7;
+          break;
+        }
+        case 'PEI': {
+          pop = 156947;
+          location = 12;
+          break;
+        }
+        case 'Quebec': {
+          pop = 8485000;
+          location = 8;
+          break;
+        }
+        case 'Saskatchewan': {
+          pop = 1174000;
+          location = 1;
+          break;
+        }
+        case 'Yukon': {
+          pop = 35874;
+          location = 6;
+          break;
+        }
+        case 'Manitoba': {
+          pop = 1369000;
+          location = 0;
+          break;
+        }
+        default: {
+          //manitoba values
+          console.log(item);
+          pop = 1369000;
+          location = 0;
+          break;
+        }
       }
-      case 'BC': {
-        pop = 5071000;
-        location = 3;
-        break;
-      }
-
-      case 'New Bruinswick': {
-        pop = 776827;
-        location = 9;
-        break;
-      }
-      case 'NL': {
-        pop = 521542;
-        location = 11;
-        break;
-      }
-      case 'Nunavut': {
-        pop = 38780;
-        location = 4;
-        break;
-      }
-      case 'Nova Scotia': {
-        pop = 971395;
-        location = 10;
-        break;
-      }
-      case 'NWT': {
-        pop = 44826;
-        location = 5;
-        break;
-      }
-      case 'Ontario': {
-        pop = 14570000;
-        location = 7;
-        break;
-      }
-      case 'PEI': {
-        pop = 156947;
-        location = 12;
-        break;
-      }
-      case 'Quebec': {
-        pop = 8485000;
-        location = 8;
-        break;
-      }
-      case 'Saskatchewan': {
-        pop = 1174000;
-        location = 1;
-        break;
-      }
-      case 'Yukon': {
-        pop = 35874;
-        location = 6;
-        break;
-      }
-      default: {
-        //manitoba values
-        pop = 1369000;
-        location = 0;
-        break;
-      }
+      // console.log(location, pop, cases);
+      arr[location] = getScore(pop, cases);
     }
-
-    arr[location] = getScore(pop, cases);
   }
+  console.log(arr);
   return arr;
 }
 
 function getScore(pop: number, cases: number) {
-  // console.log(pop);
-  return (cases / pop) * 7000;
+  return (cases / (pop * 0.0004)) * 100;
 }
