@@ -68,6 +68,7 @@ const StyledContainer = styled.div`
   height: 100px;
   justify-content: center;
   align-items: center;
+  margin-bottom: 15px;
 `;
 
 const StyledInnerContainer = styled.div<{ colorMode: ColorMode }>`

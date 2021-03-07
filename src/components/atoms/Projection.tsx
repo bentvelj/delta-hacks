@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
+import { ComposableMap, Geographies, Geography, GeographyProps } from 'react-simple-maps';
 import styled from 'styled-components';
 import theme from '../../theme';
+import { ButtonEvent, ProvinceName } from '../../utils/types';
 import { ProvinceMarkers } from './ProvinceMarkers';
 
 // url to a valid topojson file
@@ -10,16 +11,16 @@ const geoUrl =
   'https://gist.githubusercontent.com/Brideau/2391df60938462571ca9/raw/f5a1f3b47ff671eaf2fb7e7b798bacfc6962606a/canadaprov.json';
 
 interface ProjectionProps {
-  onHover: (geo: any) => void;
+  onHover: (event: ButtonEvent, geo: any) => void;
+  province: ProvinceName;
 }
 
-export const Projection: React.FC<ProjectionProps> = ({onHover}) => {
+export const Projection: React.FC<ProjectionProps> = ({ onHover, province }) => {
   return (
     <StyledProjectionContainer className="div-projection">
       <StyledComposableMap
         projection="geoAlbers"
         className="svg-composible"
-        // viewBox="0 0 500 500"
         projectionConfig={{ scale: 700, center: [-0.6, 58.7] }}
       >
         <StyledGeographies geography={geoUrl} className="g-geographies">
@@ -31,9 +32,9 @@ export const Projection: React.FC<ProjectionProps> = ({onHover}) => {
                   geography={geo}
                   stroke={theme.colors.gray[300]}
                   strokeWidth="0.5px"
-                  fill={theme.colors.gray[800]}
+                  fill={province !== geo.properties.gn_name ? theme.colors.gray[800] : theme.colors.teal[600]}
                   preserveAspectRatio="xMidYMid meet"
-                  onMouseEnter={() => onHover(geo)}
+                  onClick={(event) => onHover(event, geo)}
                 />
               );
             })
@@ -75,14 +76,3 @@ const StyledProvince = styled(Geography)`
     fill: ${theme.colors.teal[600]};
   }
 `;
-
-/**
- *
- */
-function updateAnnotation(geo: any) {
-  <ProvinceMarkers
-    name={geo.properties.gn_name}
-    population={100}
-    cases={46}
-  ></ProvinceMarkers>;
-}

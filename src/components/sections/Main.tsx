@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { ButtonEvent, ProvinceName } from '../../utils/types';
 import { Projection } from '../atoms/Projection';
 import { InfoContainer } from '../containers/InfoContainer';
 import { SliderPanel } from '../containers/SliderPanel';
@@ -7,17 +8,16 @@ import { SliderPanel } from '../containers/SliderPanel';
 interface MainProps {}
 
 export const Main: React.FC<MainProps> = ({}) => {
-  const [province, setProvince] = useState<string>('ontario');
+  const [province, setProvince] = useState<ProvinceName>('Ontario');
 
-  const handleHoverEvent = (geo: any) => {
-    console.log(geo.properties.gn_name);
+  const handleClick = (event: ButtonEvent, geo: any) => {
     setProvince(geo.properties.gn_name);
   };
 
   return (
     <>
       <StyledContainer>
-        <Projection onHover={handleHoverEvent} />
+        <Projection onHover={handleClick} province={province} />
         <InfoContainer province={province} />
       </StyledContainer>
 

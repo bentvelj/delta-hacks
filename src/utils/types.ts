@@ -12,3 +12,5 @@ export type ProvinceName =
   | 'Quebec'
   | 'Saskatchewan'
   | 'Yukon';
+
+export type ButtonEvent = React.MouseEvent<SVGPathElement, MouseEvent>;
