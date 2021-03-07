@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { generateAbbrev } from '../../utils/generateAbbrev';
 import { ButtonEvent } from '../../utils/types';
+import { Legend } from '../atoms/Legend';
 import { Projection } from '../atoms/Projection';
 import { InfoContainer } from '../containers/InfoContainer';
 import { SliderPanel } from '../containers/SliderPanel';
@@ -217,6 +218,7 @@ export const Main: React.FC<MainProps> = () => {
   return (
     <>
       <StyledContainer>
+        <Legend></Legend>
         <Projection
           onHover={handleClick}
           province={province}
