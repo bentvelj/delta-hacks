@@ -120,6 +120,15 @@ class Simulation:
             raise AssertionError("A simulation must be ran before we can pull data.")
         return [round(x) for x in self.D]
 
+    # @return: List of integers representing the number of DEAD MONS each day
+    def get_Active_Cases(self, I_Vector):
+        if not self.SIM_RAN:
+            raise AssertionError("A simulation must be ran before we can pull data.")
+        res = [0] + [I_Vector[i] - I_Vector[i-1] for i in range(1, len(I_Vector))]
+        if len(res) != len(I_Vector):
+            raise AssertionError("Active cases vector length != I_Vector length. Check get_Active_Cases()")
+        return res
+
 @app.route('/')
 def beans():
     return "matt was here"
@@ -159,13 +168,15 @@ def simulation_nation():
     # If the simulation fails it's probably our fault, return 500
     try:
         sim.simulate(days)
+        I_Vector = sim.get_I_Vector() # needed twice, so only call once
         # Create our Vector dictionaries
         sVd = dict(name="susceptible_vector",data=sim.get_S_Vector())
         iVd = dict(name="infected_vector",data=sim.get_I_Vector())
         rVd = dict(name="recovered_vector",data=sim.get_R_Vector())
         vVd = dict(name="vaccinated_vector",data=sim.get_V_Vector())
         dVd = dict(name="dead_vector",data=sim.get_D_Vector())
-        json_output = jsonify(dict(data_vectors=[sVd,iVd,rVd,vVd,dVd]))
+        activeCases = dict(name="active_cases",data=sim.get_Active_Cases(I_Vector))
+        json_output = jsonify(dict(data_vectors=[sVd,iVd,rVd,vVd,dVd,activeCases]))
 
     except RuntimeError:
         return "The simulation just went bad... But you're the best I ever had <3", 500
