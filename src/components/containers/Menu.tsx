@@ -20,9 +20,9 @@ const StyledMenuContainer = styled.div`
   height: 100%;
   width: 250px;
 
-  @media (max-width: 760px) {
+  /* @media (max-width: 760px) {
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
-  }
+  } */
 `;

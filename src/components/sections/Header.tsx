@@ -36,9 +36,9 @@ const StyledInnerContainer = styled(FlexContainer)`
   flex-wrap: wrap;
   justify-content: space-between;
 
-  @media (max-width: 760px) {
+  /* @media (max-width: 760px) {
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
-  }
+  } */
 `;
