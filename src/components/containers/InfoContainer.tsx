@@ -1,28 +1,50 @@
-import { ColorMode, useColorMode } from '@chakra-ui/react';
+import { ColorMode, useColorMode, useColorModeValue } from '@chakra-ui/react';
 import React from 'react';
 import styled from 'styled-components';
 import theme from '../../theme';
+import { CaseToggle } from '../atoms/CaseToggle';
 import { ProvinceMarkers } from '../atoms/ProvinceMarkers';
+import { ICovidData } from '../sections/Main';
 
 interface InfoContainerProps {
   province: string;
+  population: number;
+  onTogglerClick: () => void;
+  casegradient: boolean;
+  covidData: ICovidData;
 }
 
-export const InfoContainer: React.FC<InfoContainerProps> = ({province}) => {
+export const InfoContainer: React.FC<InfoContainerProps> = ({
+  province,
+  population,
+  casegradient,
+  onTogglerClick,
+  covidData,
+}) => {
   const { colorMode } = useColorMode();
-  return <StyledContainer colorMode={colorMode}>
-    <ProvinceMarkers name={province} population={100} cases={30}/>
-  </StyledContainer>;
+  const colour = useColorModeValue(theme.colors.gray[300], theme.colors.gray[700]);
+
+  return (
+    <StyledContainer colorMode={colorMode} style={{backgroundColor: colour}}>
+      <ProvinceMarkers
+        name={province}
+        population={population}
+        covidData={covidData}
+      />
+      <CaseToggle
+        casegradient={casegradient}
+        onTogglerClick={onTogglerClick}
+      ></CaseToggle>
+    </StyledContainer>
+  );
 };
 
 const StyledContainer = styled.div<{ colorMode: ColorMode }>`
   width: 450px;
   height: 400px;
+  padding: 15px 20px;
   border-radius: 10px;
   box-shadow: ${theme.shadows.lg};
-  background-color: ${({ colorMode }) =>
-    colorMode === 'light' ? theme.colors.gray[100] : theme.colors.gray[700]};
-  
   @media (max-width: 1746px) {
     width: 75%;
     height: auto;

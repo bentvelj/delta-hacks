@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { ColorToggle } from '../atoms/ColorToggle';
 import { MenuItem } from '../atoms/MenuItem';
 
-export const Menu: React.FC = ({}) => {
+export const Menu: React.FC = () => {
   return (
     <StyledMenuContainer>
       <MenuItem type="github" />
-      <MenuItem type="docs" />
+      <MenuItem type="API" />
       <ColorToggle />
     </StyledMenuContainer>
   );

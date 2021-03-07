@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import {
   ColorMode,
@@ -10,14 +10,21 @@ import {
   SliderThumb,
 } from '@chakra-ui/react';
 import calculateDate from '../../utils/calculateDate';
+import calculatePercentage from '../../utils/calculatePercentage';
+import { useColorModeValue } from "@chakra-ui/react"
 
 interface SliderPanelProps {
-  onDateChange: (formattedSelectedDate: string) => void;
+  handleSliderChange: (date: string) => Promise<void>;
 }
 
-export const SliderPanel: React.FC<SliderPanelProps> = ({ onDateChange }) => {
+export const SliderPanel: React.FC<SliderPanelProps> = ({
+  handleSliderChange
+}) => {
+  const presentDatePercentage = calculatePercentage();
   const { colorMode } = useColorMode();
-  const [sliderPercantage, changeSliderPercantage] = useState(100);
+  const [sliderPercantage, changeSliderPercantage] = useState(presentDatePercentage);
+
+  const colour = useColorModeValue(theme.colors.gray[300], theme.colors.gray[700]);
 
   const selectedDate = calculateDate(sliderPercantage);
   const formattedSelectedDate =
@@ -26,38 +33,23 @@ export const SliderPanel: React.FC<SliderPanelProps> = ({ onDateChange }) => {
     (selectedDate.getMonth() + 1) +
     '-' +
     selectedDate.getFullYear();
-    
-  console.log('formateed date', formattedSelectedDate);
-  console.log('selected date', selectedDate.toString());
 
-  useEffect(() => {
-    onDateChange(formattedSelectedDate);
-  });
-
-  // onDateChange(formattedSelectedDate);
-  /* fetch(`https://api.opencovid.ca/timeseries?stat=cases&loc=prov&date=01-09-2020`)
-            .then(response => response.json())
-            .then(function (data) {
-
-                let lat = data.results[0].geometry.location.lat;
-                let lng = data.results[0].geometry.location.lng;
-                obj.setState({ location: { latitude: lat, longitude: lng } })
-            })
-            .catch(err => {
-                console.log(err)
-            }) */
+  const onSlideChange = () => {
+    handleSliderChange(formattedSelectedDate);
+  };
 
   return (
     <StyledContainer>
-      <StyledInnerContainer colorMode={colorMode}>
+      <StyledInnerContainer colorMode={colorMode} style={{backgroundColor: colour}}>
         <StyledInfoWrapper>
           Date Selected: {selectedDate.toDateString()}
         </StyledInfoWrapper>
         <Slider
           aria-label="slider-ex-2"
-          colorScheme="teal"
-          defaultValue={sliderPercantage}
+          colorScheme={sliderPercantage <= presentDatePercentage ? "teal" : "red"}
+          defaultValue={presentDatePercentage}
           onChange={(value) => changeSliderPercantage(value)}
+          onMouseUp={() => onSlideChange()}
         >
           <SliderTrack>
             <SliderFilledTrack />
@@ -84,8 +76,6 @@ const StyledInnerContainer = styled.div<{ colorMode: ColorMode }>`
   width: 75%;
   max-width: 1400px;
   height: 100%;
-  background-color: ${({ colorMode }) =>
-    colorMode === 'light' ? theme.colors.gray[100] : theme.colors.gray[700]};
   border-radius: 10px;
   padding: 20px;
   box-shadow: ${theme.shadows.lg};
