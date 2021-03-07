@@ -34,6 +34,7 @@ export const Projection: React.FC<ProjectionProps> = ({
             geographies.map((geo) => {
               return (
                 <StyledProvince
+                  numberList={numberList}
                   caseGradient={caseGradient}
                   province={province}
                   key={geo.rsmKey}
@@ -78,6 +79,7 @@ const StyledGeographies = styled(Geographies)``;
 const StyledProvince = styled(Geography)<{
   province: string;
   caseGradient: boolean;
+  numberList: number[];
 }>`
   fill: ${(props) => {
     if (props.caseGradient) {
@@ -104,7 +106,7 @@ const StyledProvince = styled(Geography)<{
   :active {
     fill: ${(props) => {
       if (!props.caseGradient) {
-        return theme.colors.teal[600]
+        return theme.colors.teal[600];
       }
     }};
   }
