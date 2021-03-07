@@ -32,8 +32,8 @@ export const ProvinceMarkers: React.FC<ProvinceMarkersProps> = ({
 const StyledProviceDisplay = styled.div`
   justify-content: center;
   align-items: center;
-  padding: 15px 20px;
   border-radius: 5px;
+  margin-bottom: 15px;
 `;
 
 const StyledTitle = styled.h1`

@@ -1,3 +1,4 @@
+import { Button } from '@chakra-ui/react';
 import { randomInt } from 'd3-random';
 import React, { useState } from 'react';
 import styled from 'styled-components';
@@ -14,6 +15,7 @@ interface MainProps {
 export const Main: React.FC<MainProps> = ({}) => {
   const [province, setProvince] = useState<string>('ontario');
   const [date, setDate] = useState<string>('11-09-2000');
+  const [caseGradient, setCaseGradient] = useState<boolean>(false);
   // const [numbersList, changeNumbersList] = useState<number[]>([]);
 
   // const getData = () => {
@@ -34,23 +36,27 @@ export const Main: React.FC<MainProps> = ({}) => {
     // getData();
   };
 
-  fetch(`https://api.opencovid.ca/timeseries?stat=cases&loc=prov&date=01-09-2020`)
-            .then(response => response.json())
-            .then(function (data) {
-
-                let lat = data.results[0].geometry.location.lat;
-                let lng = data.results[0].geometry.location.lng;
-                obj.setState({ location: { latitude: lat, longitude: lng } })
-            })
-            .catch(err => {
-                console.log(err)
-  })
+  const handleToggler = () => {
+    console.log(caseGradient);
+    setCaseGradient(!caseGradient);
+  };
+  // const getData = () => {
+  //   var arr = [];
+  //   for (var i = 0; i >= 12; i++) {
+  //     arr.push(Math.floor(Math.random() * 100));
+  //   }
+  //   changeNumbersList(arr);
+  // };
 
   return (
     <>
       <StyledContainer>
         <Projection onHover={handleClick} province={province} />
-        <InfoContainer province={province} />
+        <InfoContainer
+          province={province}
+          onTogglerClick={handleToggler}
+          caseGradient={caseGradient}
+        />
       </StyledContainer>
 
       <SliderPanel onDateChange={handleDateChangeEvent}></SliderPanel>

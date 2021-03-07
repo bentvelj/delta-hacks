@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ComposableMap, Geographies, Geography, GeographyProps } from 'react-simple-maps';
+import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 import styled from 'styled-components';
 import theme from '../../theme';
-import { ButtonEvent, ProvinceName } from '../../utils/types';
-import { ProvinceMarkers } from './ProvinceMarkers';
+import { ButtonEvent } from '../../utils/types';
 
 // url to a valid topojson file
 const geoUrl =
@@ -15,7 +14,10 @@ interface ProjectionProps {
   province: string;
 }
 
-export const Projection: React.FC<ProjectionProps> = ({ onHover, province }) => {
+export const Projection: React.FC<ProjectionProps> = ({
+  onHover,
+  province = 'ontario',
+}) => {
   return (
     <StyledProjectionContainer className="div-projection">
       <StyledComposableMap
@@ -33,7 +35,11 @@ export const Projection: React.FC<ProjectionProps> = ({ onHover, province }) => 
                   geography={geo}
                   stroke={theme.colors.gray[300]}
                   strokeWidth="0.5px"
-                  fill={province !== geo.properties.gn_name ? theme.colors.gray[800] : theme.colors.teal[600]}
+                  fill={
+                    province !== geo.properties.gn_name
+                      ? theme.colors.gray[800]
+                      : theme.colors.teal[600]
+                  }
                   preserveAspectRatio="xMidYMid meet"
                   onClick={(event) => onHover(event, geo)}
                 />
@@ -47,6 +53,7 @@ export const Projection: React.FC<ProjectionProps> = ({ onHover, province }) => 
 };
 
 const StyledProjectionContainer = styled.div`
+  position: relative;
   height: 600px;
   width: 900px;
   margin: 0;
@@ -62,10 +69,14 @@ const StyledComposableMap = styled(ComposableMap)`
 
 const StyledGeographies = styled(Geographies)``;
 
-const StyledProvince = styled(Geography)<{province: string}>`
+const StyledProvince = styled(Geography)<{ province: string }>`
   :hover {
     cursor: pointer;
-    fill: ${(props) => props.geography.properties.gn_name !== props.province ? theme.colors.gray[700]: theme.colors.teal[500]};
+    fill: ${(props) =>
+      props.geography.properties.gn_name.toLowerCase() !==
+      props.province.toLowerCase()
+        ? theme.colors.gray[700]
+        : theme.colors.teal[500]};
   }
 
   :focus,
